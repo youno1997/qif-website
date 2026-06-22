@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#FF8A80"/>
+      <stop offset="100%" stop-color="#FF5252"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0F1B33"/>
+      <stop offset="100%" stop-color="#080E1C"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="229" fill="url(#bg)"/>
+  <!-- Background stars -->
+  <circle cx="143" cy="113" r="5.1" fill="white" opacity="0.5"/>
+  <circle cx="845" cy="92" r="6.1" fill="white" opacity="0.45"/>
+  <circle cx="912" cy="266" r="4.1" fill="white" opacity="0.35"/>
+  <circle cx="92" cy="333" r="4.6" fill="white" opacity="0.3"/>
+  <circle cx="246" cy="896" r="5.1" fill="white" opacity="0.4"/>
+  <circle cx="860" cy="870" r="3.6" fill="white" opacity="0.25"/>
+  <circle cx="471" cy="72" r="3.1" fill="white" opacity="0.45"/>
+  <circle cx="932" cy="589" r="4.1" fill="white" opacity="0.2"/>
+  <circle cx="77" cy="743" r="5.6" fill="white" opacity="0.35"/>
+  <circle cx="691" cy="948" r="3.6" fill="white" opacity="0.3"/>
+  <circle cx="369" cy="973" r="2.6" fill="white" opacity="0.25"/>
+  <circle cx="948" cy="451" r="3.1" fill="white" opacity="0.2"/>
+  <circle cx="563" cy="51" r="2.6" fill="white" opacity="0.4"/>
+  <circle cx="61" cy="512" r="3.6" fill="white" opacity="0.3"/>
+  <circle cx="282" cy="61" r="4.1" fill="white" opacity="0.35"/>
+  <circle cx="768" cy="973" r="3.1" fill="white" opacity="0.2"/>
+  <path d="M 399,164 L 625,164 Q 666,164 696,194 L 830,328 Q 860,358 860,399 L 860,625 Q 860,666 830,696 L 696,830 Q 666,860 625,860 L 399,860 Q 358,860 328,830 L 194,696 Q 164,666 164,625 L 164,399 Q 164,358 194,328 L 328,194 Q 358,164 399,164 Z"
+        fill="none" stroke="url(#g)" stroke-width="41" stroke-linejoin="round"/>
+  <text x="512" y="579" text-anchor="middle" font-family="'Noto Naskh Arabic','Amiri','Traditional Arabic',serif" font-size="300" font-weight="700" fill="url(#g)" direction="rtl">قف</text>
+</svg>
