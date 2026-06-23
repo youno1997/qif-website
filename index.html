@@ -353,6 +353,21 @@
   }
   .closing .hero-cta{margin-top:0}
 
+  /* ---------- more-than-a-lock feature strip ---------- */
+  .more{position:relative;z-index:1;text-align:center;padding:48px 0 6px}
+  .more-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-2);margin-bottom:14px}
+  .more-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
+  .more-h{font-size:clamp(23px,5.4vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.12;margin:0 auto 26px;max-width:16ch;text-wrap:balance;overflow-wrap:break-word}
+  .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:11px;max-width:680px;margin:0 auto;padding:0 8px}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-size:14.5px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.045);border:1px solid var(--hairline);border-radius:100px;padding:10px 17px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:border-color .25s var(--ease),background .25s var(--ease)}
+  .chip:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.07)}
+  .chip.gold{color:var(--gold);background:rgba(245,197,66,.08);border-color:rgba(245,197,66,.3)}
+  @media(max-width:600px){
+    .more-h{font-size:clamp(21px,6.4vw,30px);max-width:14ch}
+    .chips{gap:8px;max-width:420px;padding:0 14px}
+    .chip{font-size:13px;padding:9px 13px}
+  }
+
   /* ---------- FAQ ---------- */
   .faq{
     position:relative;z-index:1;
@@ -490,12 +505,28 @@
               <div class="screen">
                 <span class="notch" aria-hidden="true"></span>
                 <span class="glare" aria-hidden="true"></span>
-                <img src="assets/shot-quran.png" alt="Qif read Quran to unlock screen with an ayah" loading="lazy" />
+                <img src="assets/shot-quran-audio.png" alt="Read the Quran word by word with audio recitation" loading="lazy" />
               </div>
-              <figcaption class="cap">Quran</figcaption>
+              <figcaption class="cap">Read &amp; listen</figcaption>
             </figure>
           </div>
           <p class="scroll-hint">Swipe <span class="ar" aria-hidden="true">→</span></p>
+        </div>
+      </section>
+
+      <!-- more than a lock: feature strip -->
+      <section class="more" aria-label="Everything Qif does">
+        <div class="inner">
+          <p class="more-eyebrow"><span class="dot"></span> More than a lock</p>
+          <h2 class="more-h">Your everyday Quran companion</h2>
+          <div class="chips">
+            <span class="chip">📖 Full Quran</span>
+            <span class="chip">🎧 Recitations</span>
+            <span class="chip">🕌 Prayer times</span>
+            <span class="chip">📿 Dhikr &amp; tasbih</span>
+            <span class="chip">📊 Hasanat</span>
+            <span class="chip gold">✨ More coming</span>
+          </div>
         </div>
       </section>
 
@@ -528,6 +559,10 @@
         <details class="q">
           <summary>Does it know my prayer times? <span class="ico" aria-hidden="true">+</span></summary>
           <div class="a">Yes. Qif uses your location to calculate accurate prayer times automatically.</div>
+        </details>
+        <details class="q">
+          <summary>Is Qif a Quran app too? <span class="ico" aria-hidden="true">+</span></summary>
+          <div class="a">Yes — read the whole Quran with translation, transliteration, and word-by-word audio recitation, plus dhikr, tasbih, and prayer times. More features are on the way.</div>
         </details>
       </section>
     </main>
