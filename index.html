@@ -3,26 +3,29 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Qif — When it's time to pray, your apps lock</title>
-<meta name="description" content="Qif locks your distracting apps when it's time to pray. Unlock with dhikr, Quran, or by marking your prayer. Free to start." />
+<title>Qif — All your Islamic apps in one</title>
+<meta name="description" content="Prayer times, the full Quran with word-by-word audio, dhikr, tasbih, qibla and streaks — in one app. Plus the part no other app has: when it's time to pray, your apps lock. Free to start." />
 <meta name="theme-color" content="#080E1A" />
+<link rel="canonical" href="https://qifapp.com/" />
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Qif — When it's time to pray, your apps lock" />
-<meta property="og:description" content="When it's time to pray, your apps lock." />
+<meta property="og:site_name" content="Qif" />
+<meta property="og:title" content="Qif — All your Islamic apps in one" />
+<meta property="og:description" content="Prayer times, Quran, dhikr, qibla and focus in one app — and when it's time to pray, your apps lock." />
 <meta property="og:image" content="https://qifapp.com/assets/og-card.png" />
 <meta property="og:url" content="https://qifapp.com/" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Qif — When it's time to pray, your apps lock" />
-<meta name="twitter:description" content="When it's time to pray, your apps lock." />
+<meta name="twitter:title" content="Qif — All your Islamic apps in one" />
+<meta name="twitter:description" content="Prayer times, Quran, dhikr, qibla and focus in one app — and when it's time to pray, your apps lock." />
 <meta name="twitter:image" content="https://qifapp.com/assets/og-card.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="assets/hero-bg.jpg" />
 
 <style>
   :root{
@@ -34,10 +37,13 @@
     --blue:#3370D6;
     --blue-2:#5A8FE8;
     --teal:#62D9B4;
+    --violet:#9C8CF0;
     --ink:#FFFFFF;
     --muted:rgba(233,238,248,0.72);
     --faint:rgba(233,238,248,0.46);
     --hairline:rgba(255,255,255,0.10);
+    --card:rgba(255,255,255,0.035);
+    --card-hi:rgba(255,255,255,0.058);
     --ease:cubic-bezier(.16,1,.3,1);
     --maxw:1160px;
   }
@@ -56,6 +62,7 @@
   }
   a{color:inherit;text-decoration:none}
   img{display:block;max-width:100%}
+  section[id]{scroll-margin-top:78px}
 
   /* ---------- celestial base + starfield ---------- */
   .stars{position:fixed;inset:0;z-index:0;pointer-events:none}
@@ -100,7 +107,7 @@
   .wrap{position:relative;z-index:1}
   .inner{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 22px}
 
-  /* ---------- top sticky bar (desktop) ---------- */
+  /* ---------- top sticky bar ---------- */
   .topbar{
     position:sticky;top:0;z-index:50;
     backdrop-filter:saturate(150%) blur(14px);
@@ -109,11 +116,15 @@
     border-bottom:1px solid transparent;
     transition:border-color .4s var(--ease), background .4s var(--ease);
   }
-  .topbar.scrolled{border-bottom-color:var(--hairline);background:linear-gradient(to bottom, rgba(8,14,26,.92), rgba(8,14,26,.62))}
+  .topbar.scrolled{border-bottom-color:var(--hairline);background:linear-gradient(to bottom, rgba(8,14,26,.94), rgba(8,14,26,.66))}
   .topbar-in{
     max-width:var(--maxw);margin:0 auto;padding:14px 22px;
     display:flex;align-items:center;justify-content:space-between;gap:16px;
   }
+  .topnav{display:none;align-items:center;gap:26px;font-size:14.5px;font-weight:500;color:var(--muted)}
+  .topnav a{transition:color .25s var(--ease)}
+  .topnav a:hover{color:var(--ink)}
+  @media(min-width:900px){ .topnav{display:flex} }
 
   .wordmark{
     display:inline-flex;align-items:center;gap:10px;
@@ -159,31 +170,16 @@
   .appbtn--sm .lab b{font-size:15px}
 
   .appbtn--hero{padding:17px 30px}
+  .appbtn--hero::after{animation:sheen 7s ease-in-out 2.6s infinite}
+  .appbtn--hero:hover::after{animation:none;transform:translateX(130%)}
+  @keyframes sheen{0%,72%{transform:translateX(-130%)}88%,100%{transform:translateX(130%)}}
   .appbtn--hero .lab b{font-size:20px}
   .appbtn--hero svg{width:30px;height:30px}
 
   .topbar-cta{display:none}
   @media(min-width:760px){ .topbar-cta{display:inline-flex} }
 
-  /* ---------- hero ---------- */
-  .hero{
-    position:relative;z-index:1;
-    padding:54px 0 30px;
-    text-align:center;
-    overflow:hidden;
-  }
-  .hero-bg{
-    position:absolute;inset:0;z-index:-1;
-    background-image:
-      linear-gradient(to bottom, rgba(8,14,26,.32) 0%, rgba(8,14,26,.55) 42%, rgba(8,14,26,.92) 78%, var(--navy) 100%),
-      url('assets/hero-bg.png');
-    background-size:cover;
-    background-position:60% 30%;
-    opacity:0;transform:scale(1.06);
-    animation:heroIn 1.8s var(--ease) forwards;
-  }
-  @keyframes heroIn{to{opacity:1;transform:scale(1)}}
-
+  /* ---------- shared section furniture ---------- */
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
     font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
@@ -191,17 +187,46 @@
     padding:7px 15px;border-radius:100px;
     background:rgba(245,197,66,.07);
     border:1px solid rgba(245,197,66,.22);
-    margin-bottom:26px;
-    opacity:0;animation:rise .9s var(--ease) .15s forwards;
   }
   .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
+  .sec-h{
+    font-size:clamp(24px,5.6vw,38px);font-weight:800;letter-spacing:-.028em;line-height:1.1;
+    margin:16px auto 12px;max-width:17ch;text-wrap:balance;overflow-wrap:break-word;
+  }
+  .sec-h .accent{
+    background:linear-gradient(102deg,var(--gold) 0%,var(--gold-2) 55%,var(--gold-3) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sec-h .accent-b{color:var(--blue-2)}
+  .sec-sub{font-size:clamp(14.5px,3.4vw,17px);color:var(--muted);max-width:52ch;margin:0 auto;line-height:1.6;text-wrap:balance}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;z-index:1;
+    padding:54px 0 26px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;z-index:-1;
+    background-image:
+      linear-gradient(to bottom, rgba(8,14,26,.36) 0%, rgba(8,14,26,.58) 42%, rgba(8,14,26,.93) 80%, var(--navy) 100%),
+      url('assets/hero-bg.jpg');
+    background-size:cover;
+    background-position:60% 30%;
+    opacity:0;transform:scale(1.06);
+    animation:heroIn 1.8s var(--ease) forwards;
+  }
+  @keyframes heroIn{to{opacity:1;transform:scale(1)}}
+
+  .hero .eyebrow{margin-bottom:24px;opacity:0;animation:rise .9s var(--ease) .15s forwards}
 
   h1.headline{
-    font-size:clamp(29px,7.2vw,58px);
+    font-size:clamp(31px,7.4vw,62px);
     font-weight:800;
-    letter-spacing:-.03em;
-    line-height:1.08;
-    max-width:13ch;margin:0 auto;
+    letter-spacing:-.035em;
+    line-height:1.05;
+    max-width:14ch;margin:0 auto;
     text-wrap:balance;overflow-wrap:break-word;
     opacity:0;animation:rise 1s var(--ease) .28s forwards;
   }
@@ -209,34 +234,58 @@
     background:linear-gradient(102deg,var(--gold) 0%,var(--gold-2) 48%,var(--gold-3) 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
+  h1.headline .l1,h1.headline .l2{display:inline-block;opacity:0}
+  h1.headline .l1{animation:rise .95s var(--ease) .28s forwards}
+  h1.headline .l2{animation:rise .95s var(--ease) .46s forwards}
   .subline{
-    margin:16px auto 0;
-    font-size:clamp(14.5px,3.7vw,18px);
+    margin:18px auto 0;
+    font-size:clamp(15px,3.7vw,18.5px);
     font-weight:400;color:var(--muted);
-    max-width:26ch;padding:0 18px;text-wrap:balance;
+    max-width:40ch;padding:0 6px;text-wrap:balance;line-height:1.55;
     opacity:0;animation:rise 1s var(--ease) .42s forwards;
   }
+  .subline b{color:var(--ink);font-weight:600}
 
   .hero-cta{
-    margin-top:30px;
+    margin-top:28px;
     display:flex;flex-direction:column;align-items:center;gap:15px;
     opacity:0;animation:rise 1s var(--ease) .56s forwards;
   }
   .trust{
-    display:inline-flex;align-items:center;gap:9px;
+    display:inline-flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:center;
     font-size:13px;font-weight:500;color:var(--faint);
     letter-spacing:.01em;
   }
   .trust .star{color:var(--gold);font-size:12px;letter-spacing:1px}
   .trust .sep{opacity:.4}
+  .trust .wide{display:none}
+  @media(min-width:480px){ .trust{flex-wrap:nowrap} .trust .wide{display:inline} }
 
   @keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-  /* ---------- phone fan ---------- */
-  .stage{
+  /* ---------- all-in-one marquee ---------- */
+  .marquee{
     position:relative;z-index:1;
-    padding:42px 0 8px;
+    margin-top:34px;
+    overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+    opacity:0;animation:rise 1s var(--ease) .7s forwards;
   }
+  .marquee-track{display:flex;width:max-content;animation:slide 42s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  .marquee-set{display:flex;align-items:center;gap:10px;padding-right:10px;flex:none}
+  .mq{
+    display:inline-flex;align-items:center;gap:8px;flex:none;
+    font-size:14px;font-weight:600;color:rgba(255,255,255,.9);
+    background:var(--card);border:1px solid var(--hairline);
+    border-radius:100px;padding:9px 16px;white-space:nowrap;
+  }
+  .mq i{font-style:normal;font-size:15px;line-height:1}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- phone fan ---------- */
+  .stage{ position:relative;z-index:1; padding:40px 0 8px; }
   .fan{
     display:flex;justify-content:center;align-items:flex-end;
     perspective:1600px;
@@ -257,7 +306,7 @@
   .phone .screen{
     border-radius:31px;overflow:hidden;
     background:var(--navy-2);
-    aspect-ratio:1290/2796;
+    aspect-ratio:430/932;
     position:relative;
   }
   .phone .screen img{width:100%;height:100%;object-fit:cover}
@@ -276,7 +325,6 @@
     opacity:0;transition:opacity .5s var(--ease) .2s;
   }
 
-  /* fan geometry (desktop / wide) */
   .phone.left  { transform:translateX(46px) translateY(34px) rotate(-9deg) scale(.9); z-index:1; transform-origin:bottom right }
   .phone.mid   { transform:translateY(-6px) scale(1.02); z-index:3 }
   .phone.right { transform:translateX(-46px) translateY(34px) rotate(9deg) scale(.9); z-index:1; transform-origin:bottom left }
@@ -287,7 +335,6 @@
   .fan.in .phone.right{animation-delay:.10s}
   .fan.in .phone .cap{opacity:1}
   @keyframes phoneIn{from{opacity:0;transform:translateY(60px) scale(.86)}}
-  /* keep resting transforms after entrance */
   .fan.in .phone.left  { animation-name:phoneInLeft }
   .fan.in .phone.right { animation-name:phoneInRight }
   .fan.in .phone.mid   { animation-name:phoneInMid }
@@ -295,13 +342,16 @@
   @keyframes phoneInRight{from{opacity:0;transform:translateX(-46px) translateY(94px) rotate(9deg) scale(.78)}to{opacity:1;transform:translateX(-46px) translateY(34px) rotate(9deg) scale(.9)}}
   @keyframes phoneInMid{from{opacity:0;transform:translateY(54px) scale(.86)}to{opacity:1;transform:translateY(-6px) scale(1.02)}}
 
-  @media(hover:hover) and (min-width:760px){
-    .fan:hover .phone.mid{transform:translateY(-14px) scale(1.04)}
-    .fan:hover .phone.left{transform:translateX(38px) translateY(30px) rotate(-7deg) scale(.91)}
-    .fan:hover .phone.right{transform:translateX(-38px) translateY(30px) rotate(7deg) scale(.91)}
+  /* once settled, the phones breathe */
+  @media(min-width:760px){
+    .fan.settled .phone.left  { animation:floatLeft  9s ease-in-out infinite }
+    .fan.settled .phone.mid   { animation:floatMid   7.5s ease-in-out infinite }
+    .fan.settled .phone.right { animation:floatRight 10s ease-in-out infinite .6s }
   }
+  @keyframes floatLeft{0%,100%{transform:translateX(46px) translateY(34px) rotate(-9deg) scale(.9)}50%{transform:translateX(46px) translateY(22px) rotate(-8.2deg) scale(.905)}}
+  @keyframes floatMid{0%,100%{transform:translateY(-6px) scale(1.02)}50%{transform:translateY(-19px) scale(1.028)}}
+  @keyframes floatRight{0%,100%{transform:translateX(-46px) translateY(34px) rotate(9deg) scale(.9)}50%{transform:translateX(-46px) translateY(23px) rotate(8.2deg) scale(.905)}}
 
-  /* ---------- mobile: horizontal scroll-snap rail ---------- */
   @media(max-width:759px){
     .fan{
       display:flex;justify-content:flex-start;align-items:flex-end;
@@ -328,11 +378,157 @@
   @keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
   @media(min-width:760px){ .scroll-hint{display:none} }
 
+  /* ---------- swap: six apps -> one ---------- */
+  .swap{position:relative;z-index:1;text-align:center;padding:70px 0 10px}
+  .old-grid{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+    max-width:760px;margin:30px auto 0;
+  }
+  @media(min-width:700px){ .old-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px} }
+  .old{
+    display:flex;align-items:center;gap:11px;
+    background:rgba(255,255,255,.022);
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:16px;padding:13px 14px;
+    text-align:left;position:relative;
+    filter:grayscale(.55);opacity:.62;
+    transition:opacity .4s var(--ease), filter .4s var(--ease);
+  }
+  .swap:hover .old{opacity:.5}
+  .old .oi{
+    width:34px;height:34px;flex:none;border-radius:10px;
+    display:grid;place-items:center;font-size:17px;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);
+  }
+  .old .ol{font-size:13.5px;font-weight:600;color:rgba(233,238,248,.8);line-height:1.3}
+  .old .ol s{
+    text-decoration:line-through;
+    text-decoration-thickness:1.5px;
+    text-decoration-color:transparent;
+    transition:text-decoration-color .5s var(--ease), color .5s var(--ease);
+  }
+  .swap.in .old .ol s{text-decoration-color:rgba(255,255,255,.45);color:rgba(233,238,248,.62)}
+  .swap.in .old:nth-child(2) .ol s{transition-delay:.07s}
+  .swap.in .old:nth-child(3) .ol s{transition-delay:.14s}
+  .swap.in .old:nth-child(4) .ol s{transition-delay:.21s}
+  .swap.in .old:nth-child(5) .ol s{transition-delay:.28s}
+  .swap.in .old:nth-child(6) .ol s{transition-delay:.35s}
+
+  .funnel{
+    display:flex;flex-direction:column;align-items:center;gap:0;
+    margin:6px auto 0;
+  }
+  .funnel .line{
+    width:1px;height:34px;
+    background:linear-gradient(to bottom, transparent, rgba(245,197,66,.6));
+  }
+  .funnel .chev{
+    color:var(--gold-2);font-size:15px;line-height:1;margin-top:-2px;
+    animation:bob 2.2s var(--ease) infinite;
+  }
+  @keyframes bob{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(4px);opacity:1}}
+
+  .one-card{
+    margin:16px auto 0;max-width:520px;
+    background:linear-gradient(180deg, rgba(245,197,66,.09), rgba(255,255,255,.03));
+    border:1px solid rgba(245,197,66,.28);
+    border-radius:24px;padding:26px 24px;
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+    box-shadow:0 30px 70px -30px rgba(245,197,66,.35);
+  }
+  .one-card img{width:60px;height:60px;border-radius:17px;box-shadow:0 10px 30px -8px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.1), 0 0 34px -8px rgba(245,197,66,.55)}
+  .one-card .n{font-size:20px;font-weight:800;letter-spacing:-.02em}
+  .one-card .d{font-size:14.5px;color:var(--muted);line-height:1.55;max-width:34ch}
+  .one-card .d b{color:var(--gold-2);font-weight:700}
+
+  /* ---------- two ways your apps lock ---------- */
+  .ways{position:relative;z-index:1;text-align:center;padding:70px 0 4px}
+  .ways-grid{
+    display:grid;grid-template-columns:1fr;gap:16px;
+    max-width:900px;margin:28px auto 0;padding:0 4px;
+  }
+  @media(min-width:760px){ .ways-grid{grid-template-columns:1fr 1fr;gap:22px} }
+  .way{
+    background:var(--card);
+    border:1px solid var(--hairline);
+    border-radius:26px;
+    padding:30px 22px;
+    display:flex;flex-direction:column;align-items:center;
+    transition:opacity .7s var(--ease), transform .5s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+  }
+  .way:hover{border-color:rgba(255,255,255,.18);background:var(--card-hi);transform:translateY(-4px)}
+  .way-phone{width:min(188px,56vw);margin-bottom:22px}
+  .way-phone .phone{width:100%;opacity:1;box-shadow:0 30px 60px -24px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.07), 0 2px 0 rgba(255,255,255,.10) inset}
+  .way-tag{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+    padding:6px 13px;border-radius:100px;margin-bottom:13px;
+  }
+  .way-tag.blue{color:var(--blue-2);background:rgba(51,112,214,.12);border:1px solid rgba(90,143,232,.32)}
+  .way-tag.gold{color:var(--gold-2);background:rgba(245,197,66,.1);border:1px solid rgba(245,197,66,.32)}
+  .way h3{font-size:clamp(18px,4.4vw,22px);font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:10px;max-width:18ch}
+  .way p{font-size:14.5px;line-height:1.58;color:var(--muted);max-width:36ch}
+
+  /* ---------- everything inside: pillar grid ---------- */
+  .inside{position:relative;z-index:1;text-align:center;padding:74px 0 6px}
+  .pillars{
+    display:grid;grid-template-columns:1fr;gap:14px;
+    max-width:1060px;margin:32px auto 0;text-align:left;
+  }
+  @media(min-width:660px){ .pillars{grid-template-columns:1fr 1fr} }
+  @media(min-width:1000px){ .pillars{grid-template-columns:repeat(3,1fr);gap:16px} }
+  .pillar{
+    background:var(--card);border:1px solid var(--hairline);
+    border-radius:22px;padding:24px 22px 22px;
+    transition:opacity .7s var(--ease), transform .55s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+  }
+  .pillar:hover{border-color:rgba(255,255,255,.18);background:var(--card-hi);transform:translateY(-4px)}
+  .pillar .pi{
+    width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+    font-size:20px;margin-bottom:15px;
+    background:rgba(255,255,255,.05);border:1px solid var(--hairline);
+  }
+  .pillar.c-blue   .pi{background:rgba(51,112,214,.14);border-color:rgba(90,143,232,.34)}
+  .pillar.c-teal   .pi{background:rgba(98,217,180,.12);border-color:rgba(98,217,180,.32)}
+  .pillar.c-gold   .pi{background:rgba(245,197,66,.12);border-color:rgba(245,197,66,.32)}
+  .pillar.c-violet .pi{background:rgba(156,140,240,.13);border-color:rgba(156,140,240,.32)}
+  .pillar h3{font-size:18px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+  .pillar .lede{font-size:13.5px;color:var(--faint);line-height:1.5;margin-bottom:15px}
+  .pillar ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .pillar li{
+    position:relative;padding-left:22px;
+    font-size:14px;line-height:1.45;color:var(--muted);font-weight:500;
+  }
+  .pillar li::before{
+    content:"";position:absolute;left:2px;top:6px;
+    width:9px;height:5px;border-left:1.8px solid var(--gold-2);border-bottom:1.8px solid var(--gold-2);
+    transform:rotate(-45deg);border-radius:1px;
+  }
+  .pillar.c-blue   li::before{border-color:var(--blue-2)}
+  .pillar.c-teal   li::before{border-color:var(--teal)}
+  .pillar.c-violet li::before{border-color:var(--violet)}
+
+  .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;max-width:760px;margin:30px auto 0;padding:0 8px}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:rgba(255,255,255,.86);background:var(--card);border:1px solid var(--hairline);border-radius:100px;padding:9px 15px;transition:border-color .25s var(--ease),background .25s var(--ease)}
+  .chip:hover{border-color:rgba(255,255,255,.2);background:var(--card-hi)}
+  .chip.gold{color:var(--gold);background:rgba(245,197,66,.08);border-color:rgba(245,197,66,.3)}
+  .chips-note{margin:16px auto 0;font-size:13px;color:var(--faint)}
+
+  /* ---------- languages ---------- */
+  .langs{position:relative;z-index:1;text-align:center;padding:66px 0 6px}
+  .lang-row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:720px;margin:24px auto 0;padding:0 8px}
+  .lang{
+    font-size:13.5px;font-weight:600;color:rgba(255,255,255,.8);
+    background:rgba(255,255,255,.03);border:1px solid var(--hairline);
+    border-radius:10px;padding:8px 13px;
+  }
+  .lang.rtl{font-family:'Noto Naskh Arabic','Plus Jakarta Sans',serif;font-size:15px}
+
   /* ---------- closing band ---------- */
   .closing{
     position:relative;z-index:1;
-    margin-top:46px;
-    padding:84px 0 100px;
+    margin-top:56px;
+    padding:88px 0 100px;
     text-align:center;
     overflow:hidden;
   }
@@ -340,46 +536,24 @@
     position:absolute;inset:0;z-index:-1;
     background-image:
       linear-gradient(to bottom, var(--navy) 0%, rgba(8,14,26,.55) 30%, rgba(8,14,26,.6) 70%, var(--navy) 100%),
-      url('assets/cta-bg.png');
+      url('assets/cta-bg.jpg');
     background-size:cover;background-position:center 35%;
   }
   .closing h2{
-    font-size:clamp(25px,6vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.08;
-    max-width:14ch;margin:0 auto 26px;text-wrap:balance;overflow-wrap:break-word;
+    font-size:clamp(26px,6vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1.08;
+    max-width:15ch;margin:0 auto 14px;text-wrap:balance;overflow-wrap:break-word;
   }
   .closing h2 .accent{
     background:linear-gradient(102deg,var(--gold) 0%,var(--gold-2) 55%,var(--gold-3) 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
-  .closing .hero-cta{margin-top:0}
-
-  /* ---------- more-than-a-lock feature strip ---------- */
-  .more{position:relative;z-index:1;text-align:center;padding:48px 0 6px}
-  .more-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-2);margin-bottom:14px}
-  .more-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal)}
-  .more-h{font-size:clamp(23px,5.4vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.12;margin:0 auto 26px;max-width:16ch;text-wrap:balance;overflow-wrap:break-word}
-  .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:11px;max-width:680px;margin:0 auto;padding:0 8px}
-  .chip{display:inline-flex;align-items:center;gap:7px;font-size:14.5px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.045);border:1px solid var(--hairline);border-radius:100px;padding:10px 17px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:border-color .25s var(--ease),background .25s var(--ease)}
-  .chip:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.07)}
-  .chip.gold{color:var(--gold);background:rgba(245,197,66,.08);border-color:rgba(245,197,66,.3)}
-  @media(max-width:600px){
-    .more-h{font-size:clamp(21px,6.4vw,30px);max-width:14ch}
-    .chips{gap:8px;max-width:420px;padding:0 14px}
-    .chip{font-size:13px;padding:9px 13px}
-  }
+  .closing p.sec-sub{margin-bottom:28px}
+  .closing .hero-cta{margin-top:0;opacity:1;animation:none}
 
   /* ---------- FAQ ---------- */
-  .faq{
-    position:relative;z-index:1;
-    max-width:580px;margin:0 auto;padding:8px 22px 12px;
-  }
-  .faq-h{
-    text-align:center;font-size:12px;font-weight:600;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--faint);margin-bottom:14px;
-  }
-  details.q{
-    border-top:1px solid var(--hairline);
-  }
+  .faq{ position:relative;z-index:1; max-width:640px;margin:0 auto;padding:8px 22px 12px; }
+  .faq-h{ text-align:center;font-size:12px;font-weight:600;letter-spacing:.16em; text-transform:uppercase;color:var(--faint);margin-bottom:14px; }
+  details.q{ border-top:1px solid var(--hairline); }
   details.q:last-of-type{border-bottom:1px solid var(--hairline)}
   details.q summary{
     list-style:none;cursor:pointer;
@@ -404,7 +578,7 @@
     transition:max-height .4s var(--ease), opacity .35s var(--ease), padding .4s var(--ease);
     padding:0 6px;
   }
-  details.q[open] .a{max-height:180px;opacity:1;padding:0 6px 20px}
+  details.q[open] .a{max-height:260px;opacity:1;padding:0 6px 20px}
 
   /* ---------- footer ---------- */
   footer{
@@ -436,15 +610,123 @@
   @media(min-width:760px){ .mobile-cta{display:none} }
   @media(max-width:759px){ body{--mb-pad:70px} }
 
+
+  /* ═══════════ motion layer ═══════════ */
+
+  /* ambient aurora — slow, low-opacity colour drifting behind everything */
+  .aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .aurora span{
+    position:absolute;border-radius:50%;
+    filter:blur(80px);will-change:transform;
+    mix-blend-mode:screen;
+  }
+  .aurora .a1{width:62vw;height:62vw;left:-16vw;top:-14vh;opacity:.20;
+    background:radial-gradient(circle,#3370D6 0%,transparent 66%);
+    animation:drift1 38s ease-in-out infinite}
+  .aurora .a2{width:52vw;height:52vw;right:-14vw;top:26vh;opacity:.15;
+    background:radial-gradient(circle,#B7882E 0%,transparent 66%);
+    animation:drift2 47s ease-in-out infinite}
+  .aurora .a3{width:48vw;height:48vw;left:18vw;bottom:-20vh;opacity:.11;
+    background:radial-gradient(circle,#62D9B4 0%,transparent 68%);
+    animation:drift3 56s ease-in-out infinite}
+  @media(max-width:759px){ .aurora .a3{display:none} .aurora span{filter:blur(60px)} }
+  @keyframes drift1{0%,100%{transform:translate3d(0,0,0) scale(1)}33%{transform:translate3d(6vw,7vh,0) scale(1.12)}66%{transform:translate3d(-4vw,3vh,0) scale(.95)}}
+  @keyframes drift2{0%,100%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-7vw,-6vh,0) scale(1.15)}}
+  @keyframes drift3{0%,100%{transform:translate3d(0,0,0) scale(1)}40%{transform:translate3d(5vw,-5vh,0) scale(1.1)}75%{transform:translate3d(-6vw,2vh,0) scale(.94)}}
+
+  /* the top glow breathes */
+  .glow-top{animation:breathe 11s ease-in-out infinite}
+  @keyframes breathe{0%,100%{opacity:.78;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.07)}}
+
+  /* reading-progress hairline */
+  .progress{
+    position:fixed;top:0;left:0;height:2px;width:0;z-index:70;pointer-events:none;
+    background:linear-gradient(90deg,var(--gold-3),var(--gold) 55%,var(--gold-2));
+    box-shadow:0 0 14px rgba(245,197,66,.55);
+    border-radius:0 2px 2px 0;
+  }
+
+  /* the live dot on every eyebrow pulses */
+  .eyebrow .dot{animation:pulse 2.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 10px var(--teal)}50%{transform:scale(1.35);box-shadow:0 0 18px var(--teal)}}
+
+  /* gold text catches the light as it passes */
+  h1.headline .accent,.sec-h .accent,.closing h2 .accent{
+    background-size:230% 100%;
+    animation:shimmer 9s ease-in-out infinite;
+  }
+  @keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+  /* generic scroll reveal — staggered per element via --d */
+  .rv{
+    opacity:0;transform:translateY(22px);filter:blur(5px);
+    transition:opacity .85s var(--ease) var(--d,0ms),
+               transform .95s var(--ease) var(--d,0ms),
+               filter .8s var(--ease) var(--d,0ms);
+  }
+  .rv-in .rv{opacity:1;transform:none;filter:none}
+
+  /* cursor spotlight on cards */
+  .pillar,.way,.old,.one-card{position:relative;overflow:hidden}
+  .pillar::before,.way::before,.old::before,.one-card::before{
+    content:"";position:absolute;inset:0;border-radius:inherit;
+    pointer-events:none;z-index:0;opacity:0;
+    background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.085), transparent 62%);
+    transition:opacity .45s var(--ease);
+  }
+  .pillar:hover::before,.way:hover::before,.old:hover::before,.one-card:hover::before{opacity:1}
+  .pillar>*,.way>*,.old>*,.one-card>*{position:relative;z-index:1}
+
+  /* the app icon breathes */
+  .one-card img{animation:iconBreathe 6.5s ease-in-out infinite}
+  @keyframes iconBreathe{
+    0%,100%{transform:translateY(0) scale(1);box-shadow:0 10px 30px -8px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.1), 0 0 34px -8px rgba(245,197,66,.5)}
+    50%{transform:translateY(-5px) scale(1.035);box-shadow:0 18px 40px -10px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.14), 0 0 52px -6px rgba(245,197,66,.8)}
+  }
+  /* the funnel line draws itself when the section arrives */
+  .funnel .line{transform:scaleY(0);transform-origin:top;transition:transform .8s var(--ease) .35s}
+  .swap.in .funnel .line{transform:scaleY(1)}
+
+  /* the two lock phones drift out of sync */
+  .way-phone .phone{animation:floatSoft 8s ease-in-out infinite}
+  .way:nth-child(2) .way-phone .phone{animation-duration:9.4s;animation-delay:.8s}
+  @keyframes floatSoft{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+
+  /* small hover lifts */
+  .chip,.lang{transition:transform .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease), color .3s var(--ease)}
+  .chip:hover,.lang:hover{transform:translateY(-3px)}
+  .lang:hover{border-color:rgba(245,197,66,.35);background:rgba(245,197,66,.06)}
+
+  /* nav links grow an underline */
+  .topnav a{position:relative;padding-bottom:3px}
+  .topnav a::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;border-radius:2px;
+    background:linear-gradient(90deg,var(--gold-3),var(--gold-2));
+    transform:scaleX(0);transform-origin:center;transition:transform .4s var(--ease);
+  }
+  .topnav a:hover::after{transform:scaleX(1)}
+
+  /* details answers ease open a touch more gracefully */
+  details.q summary{transition:color .3s var(--ease)}
+  details.q summary:hover{color:#fff}
+
   @media(prefers-reduced-motion:reduce){
     *{animation:none !important;transition:none !important}
     .hero-bg{opacity:1;transform:none}
     .phone{opacity:1 !important}
-    h1.headline,.eyebrow,.subline,.hero-cta{opacity:1 !important}
+    h1.headline,.eyebrow,.subline,.hero-cta,.marquee{opacity:1 !important}
+    .swap .old .ol s{text-decoration-color:rgba(255,255,255,.45) !important}
+    .rv{opacity:1 !important;transform:none !important;filter:none !important}
+    h1.headline .l1,h1.headline .l2{opacity:1 !important}
+    .funnel .line{transform:scaleY(1) !important}
+    .aurora{display:none}
+    .progress{display:none}
   }
 </style>
 </head>
 <body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
   <div class="stars" aria-hidden="true"></div>
   <div class="glow-top" aria-hidden="true"></div>
 
@@ -455,8 +737,14 @@
         <a href="#top" class="wordmark" aria-label="Qif home">
           <img src="assets/logo.svg" alt="" width="34" height="34" /><span>Qif</span>
         </a>
+        <nav class="topnav" aria-label="Sections">
+          <a href="#all-in-one">All in one</a>
+          <a href="#lock">The lock</a>
+          <a href="#inside">Features</a>
+          <a href="#faq">FAQ</a>
+        </nav>
         <a class="appbtn appbtn--sm topbar-cta" href="https://apps.apple.com/us/app/qif-prayer-quran-lock/id6757913527" aria-label="Download Qif on the App Store">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.7 2.2-3.99 2.3-4.06-1.25-1.84-3.2-2.09-3.9-2.12-1.66-.17-3.24.98-4.08.98-.84 0-2.14-.96-3.52-.93-1.81.03-3.48 1.05-4.41 2.67-1.88 3.27-.48 8.11 1.35 10.76.9 1.3 1.97 2.76 3.38 2.71 1.36-.06 1.87-.88 3.51-.88 1.64 0 2.1.88 3.53.85 1.46-.02 2.38-1.32 3.27-2.63 1.03-1.51 1.46-2.97 1.48-3.05-.03-.01-2.84-1.09-2.87-4.32zM14.4 4.18c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.36.71-3.13 1.61-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.42-.6 3.16-1.48z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.7 2.2-3.99 2.3-4.06-1.25-1.84-3.2-2.09-3.9-2.12-1.66-.17-3.24.98-4.08.98-.84 0-2.14-.96-3.52-.93-1.81.03-3.48 1.05-4.41 2.67-1.88 3.27-.48 8.11 1.35 10.76.9 1.3 1.97 2.76 3.38 2.71 1.36-.06 1.87-.88 3.51-.88 1.64 0 2.1.88 3.53.85 1.46-.02 2.38-1.32 3.27-2.63 1.03-1.51 1.46-2.97 1.48-3.05-.03-.01-2.84-1.09-2.87-4.32zM14.4 4.18c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.36.71-3.13 1.61-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.42-.6 3.16-1.48z"/></svg>
           <span class="lab"><small>Download on the</small><b>App Store</b></span>
         </a>
       </div>
@@ -467,45 +755,92 @@
       <section class="hero">
         <div class="hero-bg" aria-hidden="true"></div>
         <div class="inner">
-          <span class="eyebrow"><span class="dot"></span> Pray first</span>
-          <h1 class="headline">When it's time to pray, <span class="accent">your apps lock.</span></h1>
-          <p class="subline">Distractions pause. Your prayer comes first.</p>
+          <span class="eyebrow"><span class="dot"></span> Prayer · Quran · Dhikr · Focus</span>
+          <h1 class="headline"><span class="l1">All your Islamic apps,</span> <span class="accent l2">in one.</span></h1>
+          <p class="subline">Prayer times, the full Quran with audio, dhikr, qibla and streaks. And the part no other app has — <b>when it's time to pray, your apps lock.</b></p>
 
           <div class="hero-cta">
             <a class="appbtn appbtn--hero" href="https://apps.apple.com/us/app/qif-prayer-quran-lock/id6757913527" aria-label="Download Qif on the App Store">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.7 2.2-3.99 2.3-4.06-1.25-1.84-3.2-2.09-3.9-2.12-1.66-.17-3.24.98-4.08.98-.84 0-2.14-.96-3.52-.93-1.81.03-3.48 1.05-4.41 2.67-1.88 3.27-.48 8.11 1.35 10.76.9 1.3 1.97 2.76 3.38 2.71 1.36-.06 1.87-.88 3.51-.88 1.64 0 2.1.88 3.53.85 1.46-.02 2.38-1.32 3.27-2.63 1.03-1.51 1.46-2.97 1.48-3.05-.03-.01-2.84-1.09-2.87-4.32zM14.4 4.18c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.36.71-3.13 1.61-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.42-.6 3.16-1.48z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.7 2.2-3.99 2.3-4.06-1.25-1.84-3.2-2.09-3.9-2.12-1.66-.17-3.24.98-4.08.98-.84 0-2.14-.96-3.52-.93-1.81.03-3.48 1.05-4.41 2.67-1.88 3.27-.48 8.11 1.35 10.76.9 1.3 1.97 2.76 3.38 2.71 1.36-.06 1.87-.88 3.51-.88 1.64 0 2.1.88 3.53.85 1.46-.02 2.38-1.32 3.27-2.63 1.03-1.51 1.46-2.97 1.48-3.05-.03-.01-2.84-1.09-2.87-4.32zM14.4 4.18c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.36.71-3.13 1.61-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.42-.6 3.16-1.48z"/></svg>
               <span class="lab"><small>Download on the</small><b>App Store</b></span>
             </a>
-            <span class="trust"><span class="star">★★★★★</span><span class="sep">·</span> Free to start <span class="sep">·</span> 3-day trial</span>
+            <span class="trust"><span class="star">★★★★★</span><span class="sep">·</span> Free to start <span class="sep">·</span> 3-day trial <span class="wide"><span class="sep">·</span> 11 languages</span></span>
+          </div>
+        </div>
+
+        <!-- everything-in-one ticker -->
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee-track">
+            <div class="marquee-set">
+              <span class="mq"><i>🕌</i> Prayer times</span>
+              <span class="mq"><i>🔊</i> Athan</span>
+              <span class="mq"><i>📖</i> Full Quran</span>
+              <span class="mq"><i>🎧</i> Word-by-word audio</span>
+              <span class="mq"><i>📿</i> Digital tasbih</span>
+              <span class="mq"><i>✨</i> Dhikr</span>
+              <span class="mq"><i>🧭</i> Qibla compass</span>
+              <span class="mq"><i>🗓️</i> Hijri calendar</span>
+              <span class="mq"><i>⏳</i> Screen-time limits</span>
+              <span class="mq"><i>🔒</i> Prayer-time lock</span>
+              <span class="mq"><i>🔥</i> Streaks</span>
+              <span class="mq"><i>💫</i> Hasanat</span>
+              <span class="mq"><i>📺</i> Stream Quran to TV</span>
+              <span class="mq"><i>📻</i> Quran radio</span>
+            </div>
+            <div class="marquee-set">
+              <span class="mq"><i>🕌</i> Prayer times</span>
+              <span class="mq"><i>🔊</i> Athan</span>
+              <span class="mq"><i>📖</i> Full Quran</span>
+              <span class="mq"><i>🎧</i> Word-by-word audio</span>
+              <span class="mq"><i>📿</i> Digital tasbih</span>
+              <span class="mq"><i>✨</i> Dhikr</span>
+              <span class="mq"><i>🧭</i> Qibla compass</span>
+              <span class="mq"><i>🗓️</i> Hijri calendar</span>
+              <span class="mq"><i>⏳</i> Screen-time limits</span>
+              <span class="mq"><i>🔒</i> Prayer-time lock</span>
+              <span class="mq"><i>🔥</i> Streaks</span>
+              <span class="mq"><i>💫</i> Hasanat</span>
+              <span class="mq"><i>📺</i> Stream Quran to TV</span>
+              <span class="mq"><i>📻</i> Quran radio</span>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- phone fan -->
-      <section class="stage" aria-label="Qif app screenshots">
+      <section class="stage" aria-label="Qif app screens">
         <div class="inner">
           <div class="fan" id="fan">
             <figure class="phone left">
               <div class="screen">
                 <span class="notch" aria-hidden="true"></span>
                 <span class="glare" aria-hidden="true"></span>
-                <img src="assets/shot-prayerlock.png" alt="Qif locking apps at prayer time with a Mark as Prayed button" loading="lazy" />
+                <picture>
+                  <source srcset="assets/screens/prayer-lock.webp" type="image/webp" />
+                  <img src="assets/screens/prayer-lock.png" alt="Qif locking apps at Asr with a Mark as Prayed button" width="620" height="1344" loading="lazy" />
+                </picture>
               </div>
-              <figcaption class="cap">Lock</figcaption>
+              <figcaption class="cap">Prayer lock</figcaption>
             </figure>
             <figure class="phone mid">
               <div class="screen">
                 <span class="notch" aria-hidden="true"></span>
                 <span class="glare" aria-hidden="true"></span>
-                <img src="assets/shot-dhikr.png" alt="Qif dhikr counter ring, complete dhikr to unlock" loading="lazy" />
+                <picture>
+                  <source srcset="assets/screens/home.webp" type="image/webp" />
+                  <img src="assets/screens/home.png" alt="Qif home screen: next prayer countdown, today's prayers, Quran and dhikr shortcuts" width="620" height="1344" fetchpriority="high" />
+                </picture>
               </div>
-              <figcaption class="cap">Dhikr</figcaption>
+              <figcaption class="cap">Your day</figcaption>
             </figure>
             <figure class="phone right">
               <div class="screen">
                 <span class="notch" aria-hidden="true"></span>
                 <span class="glare" aria-hidden="true"></span>
-                <img src="assets/shot-quran-audio.png" alt="Read the Quran word by word with audio recitation" loading="lazy" />
+                <picture>
+                  <source srcset="assets/screens/follow-along.webp" type="image/webp" />
+                  <img src="assets/screens/follow-along.png" alt="Quran follow-along: Al-Fatihah highlighted word by word with translation and transliteration" width="620" height="1344" loading="lazy" />
+                </picture>
               </div>
               <figcaption class="cap">Read &amp; listen</figcaption>
             </figure>
@@ -514,18 +849,193 @@
         </div>
       </section>
 
-      <!-- more than a lock: feature strip -->
-      <section class="more" aria-label="Everything Qif does">
+      <!-- six apps -> one -->
+      <section class="swap" id="all-in-one" aria-label="Qif replaces several apps">
         <div class="inner">
-          <p class="more-eyebrow"><span class="dot"></span> More than a lock</p>
-          <h2 class="more-h">Your everyday Quran companion</h2>
+          <span class="eyebrow"><span class="dot"></span> One app. Not six.</span>
+          <h2 class="sec-h">Everything you were juggling, <span class="accent-b">in one place.</span></h2>
+          <p class="sec-sub">Most people keep a separate app for every part of their deen — then a focus app to stop scrolling past it all. Qif is all of them, working together.</p>
+
+          <div class="old-grid">
+            <div class="old"><span class="oi" aria-hidden="true">🕌</span><span class="ol"><s>A prayer-times app</s></span></div>
+            <div class="old"><span class="oi" aria-hidden="true">📖</span><span class="ol"><s>A Quran app</s></span></div>
+            <div class="old"><span class="oi" aria-hidden="true">📿</span><span class="ol"><s>A tasbih counter</s></span></div>
+            <div class="old"><span class="oi" aria-hidden="true">🧭</span><span class="ol"><s>A qibla compass</s></span></div>
+            <div class="old"><span class="oi" aria-hidden="true">⏳</span><span class="ol"><s>A screen-time blocker</s></span></div>
+            <div class="old"><span class="oi" aria-hidden="true">🔥</span><span class="ol"><s>A habit tracker</s></span></div>
+          </div>
+
+          <div class="funnel" aria-hidden="true">
+            <span class="line"></span>
+            <span class="chev">▼</span>
+          </div>
+
+          <div class="one-card">
+            <img src="assets/icon-192.png" alt="" width="60" height="60" />
+            <span class="n">Qif</span>
+            <span class="d">One app. One subscription. And the only one that <b>closes the distraction for you</b> when it's time to worship.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- two ways your apps lock -->
+      <section class="ways" id="lock" aria-label="How Qif locks your apps">
+        <div class="inner">
+          <span class="eyebrow"><span class="dot"></span> Two ways to pause</span>
+          <h2 class="sec-h">The part no other <span class="accent">Islamic app has.</span></h2>
+          <p class="sec-sub">Reminders are easy to swipe away. Qif actually closes the apps that pull you in — and gives you a way to earn them back.</p>
+          <div class="ways-grid">
+            <article class="way">
+              <div class="way-phone">
+                <div class="phone">
+                  <div class="screen">
+                    <span class="notch" aria-hidden="true"></span>
+                    <span class="glare" aria-hidden="true"></span>
+                    <picture>
+                      <source srcset="assets/screens/prayer-lock.webp" type="image/webp" />
+                      <img src="assets/screens/prayer-lock.png" alt="Qif prayer-time lock screen for Asr with a Mark as Prayed button" width="620" height="1344" loading="lazy" />
+                    </picture>
+                  </div>
+                </div>
+              </div>
+              <span class="way-tag blue">At prayer time</span>
+              <h3>When the athan comes, your apps lock.</h3>
+              <p>A gentle nudge to pause and pray. Mark your prayer to unlock — or snooze a few minutes when you truly need to.</p>
+            </article>
+            <article class="way">
+              <div class="way-phone">
+                <div class="phone">
+                  <div class="screen">
+                    <span class="notch" aria-hidden="true"></span>
+                    <span class="glare" aria-hidden="true"></span>
+                    <picture>
+                      <source srcset="assets/screens/screentime.webp" type="image/webp" />
+                      <img src="assets/screens/screentime.png" alt="Qif screen-time limit lock on Instagram, offering Read Quran or Complete dhikr to unlock" width="620" height="1344" loading="lazy" />
+                    </picture>
+                  </div>
+                </div>
+              </div>
+              <span class="way-tag gold">When time runs out</span>
+              <h3>Scrolled too long? Earn your time back.</h3>
+              <p>Set a daily limit for the apps that pull you in. Reach it and Qif turns idle scrolling into worship — read Quran or complete dhikr to unlock more.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- everything inside Qif -->
+      <section class="inside" id="inside" aria-label="Everything inside Qif">
+        <div class="inner">
+          <span class="eyebrow"><span class="dot"></span> All in one</span>
+          <h2 class="sec-h">Everything inside <span class="accent">Qif.</span></h2>
+          <p class="sec-sub">Six apps' worth of features, built to work as one — so your prayers, your Quran and your focus all live on the same screen.</p>
+
+          <div class="pillars">
+            <article class="pillar c-blue">
+              <span class="pi" aria-hidden="true">🕌</span>
+              <h3>Prayer times &amp; athan</h3>
+              <p class="lede">Never guess when it's time again.</p>
+              <ul>
+                <li>Accurate times for your exact location</li>
+                <li>Athan with a choice of muezzins</li>
+                <li>Live countdown to the next prayer</li>
+                <li>Mark and track all five daily prayers</li>
+              </ul>
+            </article>
+
+            <article class="pillar c-teal">
+              <span class="pi" aria-hidden="true">📖</span>
+              <h3>The complete Quran</h3>
+              <p class="lede">All 114 surahs, beautifully set.</p>
+              <ul>
+                <li>Arabic with translation and transliteration</li>
+                <li>Pick up exactly where you left off</li>
+                <li>Verse-by-verse progress as you read</li>
+                <li>A daily verse to come back to</li>
+              </ul>
+            </article>
+
+            <article class="pillar c-teal">
+              <span class="pi" aria-hidden="true">🎧</span>
+              <h3>Listen &amp; follow along</h3>
+              <p class="lede">Read while you listen, word by word.</p>
+              <ul>
+                <li>Recitation highlighted word by word</li>
+                <li>Quran radio that keeps playing in the background</li>
+                <li>Adjustable pace and repeat</li>
+                <li>Stream the Quran to your TV</li>
+              </ul>
+            </article>
+
+            <article class="pillar c-violet">
+              <span class="pi" aria-hidden="true">📿</span>
+              <h3>Dhikr &amp; tasbih</h3>
+              <p class="lede">A tasbih that feels like beads.</p>
+              <ul>
+                <li>Drag-a-bead digital tasbih with haptics</li>
+                <li>A library of dhikr to choose from</li>
+                <li>Custom counts and targets</li>
+                <li>Dhikr sessions that unlock your apps</li>
+              </ul>
+            </article>
+
+            <article class="pillar c-gold">
+              <span class="pi" aria-hidden="true">🔒</span>
+              <h3>Focus &amp; screen time</h3>
+              <p class="lede">The reason people keep Qif installed.</p>
+              <ul>
+                <li>Apps lock at prayer time until you pray</li>
+                <li>Daily screen-time limits, app by app</li>
+                <li>Earn time back with Quran or dhikr</li>
+                <li>Emergency and wellness pauses, one tap</li>
+              </ul>
+            </article>
+
+            <article class="pillar c-gold">
+              <span class="pi" aria-hidden="true">🔥</span>
+              <h3>Streaks &amp; hasanat</h3>
+              <p class="lede">See your consistency add up.</p>
+              <ul>
+                <li>Daily streaks for prayer, Quran and dhikr</li>
+                <li>Verses, dhikr and salat counted for you</li>
+                <li>A running hasanat total</li>
+                <li>Your faith calendar, week by week</li>
+              </ul>
+            </article>
+          </div>
+
           <div class="chips">
-            <span class="chip">📖 Full Quran</span>
-            <span class="chip">🎧 Recitations</span>
-            <span class="chip">🕌 Prayer times</span>
-            <span class="chip">📿 Dhikr &amp; tasbih</span>
-            <span class="chip">📊 Hasanat</span>
+            <span class="chip">🧭 Qibla compass</span>
+            <span class="chip">🗓️ Hijri calendar</span>
+            <span class="chip">🌍 Community hasanat</span>
+            <span class="chip">🌸 Wellness pause</span>
+            <span class="chip">⏸️ Emergency pause</span>
+            <span class="chip">🌙 Light &amp; dark</span>
+            <span class="chip">🗣️ 11 languages</span>
             <span class="chip gold">✨ More coming</span>
+          </div>
+          <p class="chips-note">Every one of these is included — there's no second app to buy.</p>
+        </div>
+      </section>
+
+      <!-- languages -->
+      <section class="langs" aria-label="Languages Qif speaks">
+        <div class="inner">
+          <span class="eyebrow"><span class="dot"></span> For the whole ummah</span>
+          <h2 class="sec-h">Qif speaks <span class="accent">your language.</span></h2>
+          <p class="sec-sub">Eleven languages, with full right-to-left support for Arabic, Urdu and Farsi.</p>
+          <div class="lang-row">
+            <span class="lang">English</span>
+            <span class="lang rtl">العربية</span>
+            <span class="lang">Türkçe</span>
+            <span class="lang">Bahasa Melayu</span>
+            <span class="lang">Bahasa Indonesia</span>
+            <span class="lang rtl">اردو</span>
+            <span class="lang">বাংলা</span>
+            <span class="lang">हिन्दी</span>
+            <span class="lang">Français</span>
+            <span class="lang rtl">فارسی</span>
+            <span class="lang">Hausa</span>
           </div>
         </div>
       </section>
@@ -534,10 +1044,11 @@
       <section class="closing">
         <div class="closing-bg" aria-hidden="true"></div>
         <div class="inner">
-          <h2>Make space for <span class="accent">what matters.</span></h2>
-          <div class="hero-cta" style="opacity:1;animation:none">
+          <h2>One app for <span class="accent">your whole deen.</span></h2>
+          <p class="sec-sub">Prayer, Quran, dhikr and focus — free to start, on iPhone.</p>
+          <div class="hero-cta">
             <a class="appbtn appbtn--hero" href="https://apps.apple.com/us/app/qif-prayer-quran-lock/id6757913527" aria-label="Download Qif on the App Store">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.7 2.2-3.99 2.3-4.06-1.25-1.84-3.2-2.09-3.9-2.12-1.66-.17-3.24.98-4.08.98-.84 0-2.14-.96-3.52-.93-1.81.03-3.48 1.05-4.41 2.67-1.88 3.27-.48 8.11 1.35 10.76.9 1.3 1.97 2.76 3.38 2.71 1.36-.06 1.87-.88 3.51-.88 1.64 0 2.1.88 3.53.85 1.46-.02 2.38-1.32 3.27-2.63 1.03-1.51 1.46-2.97 1.48-3.05-.03-.01-2.84-1.09-2.87-4.32zM14.4 4.18c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.36.71-3.13 1.61-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.42-.6 3.16-1.48z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.7 2.2-3.99 2.3-4.06-1.25-1.84-3.2-2.09-3.9-2.12-1.66-.17-3.24.98-4.08.98-.84 0-2.14-.96-3.52-.93-1.81.03-3.48 1.05-4.41 2.67-1.88 3.27-.48 8.11 1.35 10.76.9 1.3 1.97 2.76 3.38 2.71 1.36-.06 1.87-.88 3.51-.88 1.64 0 2.1.88 3.53.85 1.46-.02 2.38-1.32 3.27-2.63 1.03-1.51 1.46-2.97 1.48-3.05-.03-.01-2.84-1.09-2.87-4.32zM14.4 4.18c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.36.71-3.13 1.61-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.42-.6 3.16-1.48z"/></svg>
               <span class="lab"><small>Download on the</small><b>App Store</b></span>
             </a>
             <span class="trust"><span class="star">★★★★★</span><span class="sep">·</span> Free to start <span class="sep">·</span> 3-day trial</span>
@@ -546,23 +1057,35 @@
       </section>
 
       <!-- FAQ -->
-      <section class="faq" aria-label="Frequently asked questions">
+      <section class="faq" id="faq" aria-label="Frequently asked questions">
         <p class="faq-h">Questions</p>
+        <details class="q">
+          <summary>What exactly is included? <span class="ico" aria-hidden="true">+</span></summary>
+          <div class="a">Everything: prayer times and athan, the complete Quran with translation, transliteration and word-by-word audio, a digital tasbih and dhikr library, a qibla compass, the Hijri calendar, streaks and hasanat — plus the prayer-time lock and daily screen-time limits. One app, one subscription.</div>
+        </details>
+        <details class="q">
+          <summary>Do I still need my other Islamic apps? <span class="ico" aria-hidden="true">+</span></summary>
+          <div class="a">That's the idea — you shouldn't. Qif covers prayer times, Quran, dhikr, qibla and tracking in one place, and adds the focus side no separate app can: it actually locks the distractions when it's time to worship.</div>
+        </details>
         <details class="q">
           <summary>Is Qif free? <span class="ico" aria-hidden="true">+</span></summary>
           <div class="a">Yes — free to start with a 3-day trial. No card needed to begin.</div>
         </details>
         <details class="q">
           <summary>How do I unlock my apps? <span class="ico" aria-hidden="true">+</span></summary>
-          <div class="a">Mark your prayer, complete a short dhikr, or read a Quran verse. You choose.</div>
+          <div class="a">Whenever your apps lock — for prayer, or when your screen-time limit's up — you unlock by marking your prayer, completing a short dhikr, or reading Quran. You choose.</div>
+        </details>
+        <details class="q">
+          <summary>Can Qif limit my screen time too? <span class="ico" aria-hidden="true">+</span></summary>
+          <div class="a">Yes. Set a daily limit for any app. When you hit it, Qif locks it until you read Quran or complete dhikr — so idle scrolling turns into worship. Change your limits anytime, and wellness and one-tap emergency pauses are built in.</div>
         </details>
         <details class="q">
           <summary>Does it know my prayer times? <span class="ico" aria-hidden="true">+</span></summary>
-          <div class="a">Yes. Qif uses your location to calculate accurate prayer times automatically.</div>
+          <div class="a">Yes. Qif uses your location to calculate accurate prayer times automatically, and plays the athan with the muezzin you choose.</div>
         </details>
         <details class="q">
-          <summary>Is Qif a Quran app too? <span class="ico" aria-hidden="true">+</span></summary>
-          <div class="a">Yes — read the whole Quran with translation, transliteration, and word-by-word audio recitation, plus dhikr, tasbih, and prayer times. More features are on the way.</div>
+          <summary>What languages does Qif support? <span class="ico" aria-hidden="true">+</span></summary>
+          <div class="a">Eleven: English, Arabic, Turkish, Malay, Indonesian, Urdu, Bengali, Hindi, French, Farsi and Hausa — with full right-to-left layout for Arabic, Urdu and Farsi.</div>
         </details>
       </section>
     </main>
@@ -570,61 +1093,190 @@
     <footer>
       <div class="wordmark fwm"><img src="assets/logo.svg" alt="" width="40" height="40" /><span>Qif</span></div>
       <nav>
+        <a href="https://apps.apple.com/us/app/qif-prayer-quran-lock/id6757913527">Download</a>
+        <a href="/live">Live map</a>
         <a href="https://www.notion.so/Privacy-Policy-for-Qif-3041610c1fb38097b028e67344fe4e71">Privacy</a>
         <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms</a>
         <a href="mailto:youssefjht@gmail.com">Support</a>
       </nav>
-      <p class="copy">© Qif</p>
+      <p class="copy">© Qif — all your Islamic apps in one.</p>
     </footer>
   </div>
 
   <!-- mobile sticky bottom CTA -->
   <div class="mobile-cta" id="mcta">
     <a class="appbtn" href="https://apps.apple.com/us/app/qif-prayer-quran-lock/id6757913527" aria-label="Download Qif on the App Store">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.04c-.03-2.7 2.2-3.99 2.3-4.06-1.25-1.84-3.2-2.09-3.9-2.12-1.66-.17-3.24.98-4.08.98-.84 0-2.14-.96-3.52-.93-1.81.03-3.48 1.05-4.41 2.67-1.88 3.27-.48 8.11 1.35 10.76.9 1.3 1.97 2.76 3.38 2.71 1.36-.06 1.87-.88 3.51-.88 1.64 0 2.1.88 3.53.85 1.46-.02 2.38-1.32 3.27-2.63 1.03-1.51 1.46-2.97 1.48-3.05-.03-.01-2.84-1.09-2.87-4.32zM14.4 4.18c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.36.71-3.13 1.61-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.42-.6 3.16-1.48z"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.7 2.2-3.99 2.3-4.06-1.25-1.84-3.2-2.09-3.9-2.12-1.66-.17-3.24.98-4.08.98-.84 0-2.14-.96-3.52-.93-1.81.03-3.48 1.05-4.41 2.67-1.88 3.27-.48 8.11 1.35 10.76.9 1.3 1.97 2.76 3.38 2.71 1.36-.06 1.87-.88 3.51-.88 1.64 0 2.1.88 3.53.85 1.46-.02 2.38-1.32 3.27-2.63 1.03-1.51 1.46-2.97 1.48-3.05-.03-.01-2.84-1.09-2.87-4.32zM14.4 4.18c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.36.71-3.13 1.61-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.42-.6 3.16-1.48z"/></svg>
       <span class="lab"><small>Download on the</small><b>App Store</b></span>
     </a>
   </div>
 
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"SoftwareApplication",
+        "name":"Qif",
+        "applicationCategory":"LifestyleApplication",
+        "operatingSystem":"iOS",
+        "url":"https://qifapp.com/",
+        "installUrl":"https://apps.apple.com/us/app/qif-prayer-quran-lock/id6757913527",
+        "description":"An all-in-one Islamic app: prayer times and athan, the complete Quran with word-by-word audio, dhikr and tasbih, qibla, streaks and hasanat — plus app locking at prayer time and daily screen-time limits.",
+        "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+        "featureList":[
+          "Prayer times and athan",
+          "Complete Quran with translation and transliteration",
+          "Word-by-word follow-along recitation",
+          "Quran radio and streaming to TV",
+          "Digital tasbih and dhikr library",
+          "Qibla compass",
+          "Hijri calendar",
+          "App locking at prayer time",
+          "Daily screen-time limits per app",
+          "Streaks, hasanat and faith calendar",
+          "11 languages with RTL support"
+        ]
+      },
+      {
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"What exactly is included?","acceptedAnswer":{"@type":"Answer","text":"Prayer times and athan, the complete Quran with translation, transliteration and word-by-word audio, a digital tasbih and dhikr library, a qibla compass, the Hijri calendar, streaks and hasanat, plus the prayer-time lock and daily screen-time limits."}},
+          {"@type":"Question","name":"Do I still need my other Islamic apps?","acceptedAnswer":{"@type":"Answer","text":"Qif covers prayer times, Quran, dhikr, qibla and tracking in one place, and adds app locking at prayer time and screen-time limits that no separate app provides."}},
+          {"@type":"Question","name":"Is Qif free?","acceptedAnswer":{"@type":"Answer","text":"Qif is free to start with a 3-day trial. No card is needed to begin."}},
+          {"@type":"Question","name":"How do I unlock my apps?","acceptedAnswer":{"@type":"Answer","text":"Unlock by marking your prayer, completing a short dhikr, or reading Quran."}},
+          {"@type":"Question","name":"Can Qif limit my screen time too?","acceptedAnswer":{"@type":"Answer","text":"Yes. Set a daily limit for any app. When you hit it, Qif locks it until you read Quran or complete dhikr. Wellness and emergency pauses are built in."}},
+          {"@type":"Question","name":"What languages does Qif support?","acceptedAnswer":{"@type":"Answer","text":"Eleven: English, Arabic, Turkish, Malay, Indonesian, Urdu, Bengali, Hindi, French, Farsi and Hausa, with full right-to-left layout for Arabic, Urdu and Farsi."}}
+        ]
+      }
+    ]
+  }
+  </script>
+
   <script>
     (function(){
-      var topbar=document.getElementById('topbar');
-      var mcta=document.getElementById('mcta');
-      var hero=document.querySelector('.hero');
+      var topbar   = document.getElementById('topbar');
+      var mcta     = document.getElementById('mcta');
+      var progress = document.getElementById('progress');
+      var hero     = document.querySelector('.hero');
+      var heroBg   = document.querySelector('.hero-bg');
+      var motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var wide     = window.matchMedia('(min-width:760px)').matches;
+      var hoverOK  = window.matchMedia('(hover:hover)').matches;
 
-      function onScroll(){
-        var y=window.pageYOffset||document.documentElement.scrollTop;
-        if(topbar) topbar.classList.toggle('scrolled', y>12);
-        // show mobile bottom bar once user scrolls past most of the hero
-        var trigger = hero ? hero.offsetHeight*0.6 : 380;
-        if(mcta) mcta.classList.toggle('show', y>trigger);
+      /* ── one rAF-batched scroll loop drives everything ───────────────── */
+      var pending = [];
+      var ticking = false, lastY = -1;
+      function frame(){
+        ticking = false;
+        var y  = window.pageYOffset || document.documentElement.scrollTop || 0;
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        if (y === lastY) return;
+        lastY = y;
+
+        if (topbar) topbar.classList.toggle('scrolled', y > 12);
+        if (mcta)   mcta.classList.toggle('show', y > (hero ? hero.offsetHeight * 0.6 : 380));
+        if (progress) progress.style.width = (max > 0 ? Math.min(1, y / max) * 100 : 0) + '%';
+        if (heroBg && motionOK && wide && y < 1000){
+          heroBg.style.transform = 'scale(1.04) translate3d(0,' + (y * 0.12) + 'px,0)';
+        }
+        if (pending.length) checkPending();
       }
-      window.addEventListener('scroll',onScroll,{passive:true});
-      onScroll();
+      function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(frame); } }
+      window.addEventListener('scroll', onScroll, {passive:true});
+      window.addEventListener('resize', function(){ lastY = -1; onScroll(); }, {passive:true});
+      frame();
 
-      // reveal the phone fan when it enters the viewport
-      var fan=document.getElementById('fan');
-      if(fan){
-        if('IntersectionObserver' in window){
-          var io=new IntersectionObserver(function(entries){
-            entries.forEach(function(e){
-              if(e.isIntersecting){ fan.classList.add('in'); io.disconnect(); }
-            });
-          },{threshold:0.2});
-          io.observe(fan);
-        } else {
-          fan.classList.add('in');
+      /* ── one pending-list drives every entrance (never misses a jump) ── */
+      function checkPending(){
+        for (var i = pending.length - 1; i >= 0; i--){
+          var item = pending[i];
+          var rect = item.el.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.9){
+            pending.splice(i, 1);
+            item.go();
+          }
         }
       }
 
-      // subtle parallax on the hero background (desktop only, motion-safe)
-      var heroBg=document.querySelector('.hero-bg');
-      var motionOK=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(heroBg && motionOK && window.matchMedia('(min-width:760px)').matches){
-        window.addEventListener('scroll',function(){
-          var y=window.pageYOffset||0;
-          if(y<900) heroBg.style.transform='scale(1.04) translateY('+(y*0.12)+'px)';
-        },{passive:true});
+      /* phone fan: rise in, then settle into a slow float */
+      var fan = document.getElementById('fan');
+      if (fan){
+        pending.push({el: fan, go: function(){
+          fan.classList.add('in');
+          if (motionOK) setTimeout(function(){ fan.classList.add('settled'); }, 1400);
+        }});
+      }
+
+      /* staggered scroll reveals */
+      var PLAN = [
+        ['.swap',    ['.eyebrow','.sec-h','.sec-sub','.old','.funnel','.one-card'],    70],
+        ['.ways',    ['.eyebrow','.sec-h','.sec-sub','.way'],                          80],
+        ['.inside',  ['.eyebrow','.sec-h','.sec-sub','.pillar','.chip','.chips-note'], 55],
+        ['.langs',   ['.eyebrow','.sec-h','.sec-sub','.lang'],                         45],
+        ['.closing', ['h2','.sec-sub','.hero-cta'],                                    90],
+        ['.faq',     ['.faq-h','details.q'],                                           55]
+      ];
+
+      PLAN.forEach(function(plan){
+        var section = document.querySelector(plan[0]);
+        if (!section) return;
+        var isSwap = plan[0] === '.swap';
+
+        if (!motionOK){
+          if (isSwap) section.classList.add('in');
+          return;
+        }
+
+        var step = plan[2], i = 0;
+        plan[1].forEach(function(sel){
+          var nodes = section.querySelectorAll(sel);
+          for (var n = 0; n < nodes.length; n++){
+            nodes[n].classList.add('rv');
+            nodes[n].style.setProperty('--d', (i * step) + 'ms');
+            i++;
+          }
+        });
+
+        pending.push({el: section, go: function(){
+          section.classList.add('rv-in');
+          if (isSwap) setTimeout(function(){ section.classList.add('in'); }, 420);
+          // hand transforms back to the hover styles once the entrance has played
+          setTimeout(function(){
+            var kids = section.querySelectorAll('.rv');
+            for (var k = 0; k < kids.length; k++){
+              kids[k].classList.remove('rv');
+              kids[k].style.removeProperty('--d');
+            }
+          }, 900 + i * step + 1200);
+        }});
+      });
+
+      checkPending();
+
+      /* ── cursor spotlight on cards ───────────────────────────────────── */
+      if (hoverOK && motionOK){
+        var cards = document.querySelectorAll('.pillar,.way,.old,.one-card');
+        for (var c = 0; c < cards.length; c++){
+          (function(card){
+            card.addEventListener('pointermove', function(ev){
+              var r = card.getBoundingClientRect();
+              card.style.setProperty('--mx', ((ev.clientX - r.left) / r.width  * 100) + '%');
+              card.style.setProperty('--my', ((ev.clientY - r.top)  / r.height * 100) + '%');
+            }, {passive:true});
+          })(cards[c]);
+        }
+      }
+
+      /* ── pause the ticker when it is off-screen ──────────────────────── */
+      var marquee = document.querySelector('.marquee-track');
+      if (marquee && 'IntersectionObserver' in window){
+        var mqIO = new IntersectionObserver(function(en){
+          en.forEach(function(e){
+            marquee.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+          });
+        });
+        mqIO.observe(marquee);
       }
     })();
   </script>
