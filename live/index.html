@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Qif · Live around the world</title>
+<meta name="description" content="A live map of people installing Qif around the world." />
+<meta property="og:title" content="Qif · Live around the world" />
+<meta property="og:description" content="Watch people pause to remember Allah, live around the world." />
+<meta property="og:image" content="https://qifapp.com/assets/og-card.png" />
+<meta property="og:url" content="https://qifapp.com/live" />
+<link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+<style>
+  html, body { margin: 0; height: 100%; background: #04060f; overflow: hidden; }
+  iframe { display: block; border: 0; width: 100vw; height: 100vh; }
+</style>
+</head>
+<body>
+  <!-- The globe + live feed are served from our analytics Worker; embedded here so it lives on qifapp.com -->
+  <iframe src="https://qif-installs.qifyoussef.workers.dev/live" title="Qif live install map" allow="autoplay"></iframe>
+</body>
+</html>
