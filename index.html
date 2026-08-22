@@ -595,6 +595,42 @@
   footer nav a:hover{color:var(--gold-2)}
   footer .copy{margin-top:22px;font-size:12px;color:var(--faint)}
 
+
+  /* ---------- support disclosure ---------- */
+  .support-panel{
+    margin:16px auto 0;max-width:340px;
+    background:var(--card);border:1px solid var(--hairline);
+    border-radius:18px;padding:18px 18px 16px;
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+    opacity:0;transform:translateY(-8px);
+    transition:opacity .35s var(--ease), transform .35s var(--ease);
+  }
+  .support-panel.open{opacity:1;transform:none}
+  .support-panel p{font-size:13px;color:var(--faint);line-height:1.5;text-align:center}
+  .support-row{
+    display:flex;align-items:center;gap:8px;width:100%;
+    background:rgba(255,255,255,.04);border:1px solid var(--hairline);
+    border-radius:12px;padding:8px 8px 8px 13px;
+  }
+  .support-row code{
+    font-family:inherit;font-size:13.5px;font-weight:600;color:var(--ink);
+    letter-spacing:-.01em;flex:1;min-width:0;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left;
+    -webkit-user-select:all;user-select:all;
+  }
+  .support-row button{
+    flex:none;font:inherit;font-size:12.5px;font-weight:700;letter-spacing:.01em;
+    color:#0A1222;background:linear-gradient(180deg,#FFFFFF,#F1F4FB);
+    border:0;border-radius:9px;padding:7px 13px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform .2s var(--ease), filter .2s var(--ease);
+  }
+  .support-row button:hover{transform:translateY(-1px);filter:brightness(1.04)}
+  .support-row button:active{transform:none}
+  .support-row button.done{background:linear-gradient(180deg,#8BE9C2,#62D9B4)}
+  .support-mail{font-size:13px;font-weight:600;color:var(--gold-2);transition:color .25s var(--ease)}
+  .support-mail:hover{color:var(--gold)}
+
   /* ---------- mobile sticky bottom bar ---------- */
   .mobile-cta{
     position:fixed;left:0;right:0;bottom:0;z-index:60;
@@ -1097,8 +1133,16 @@
         <a href="/live">Live map</a>
         <a href="https://www.notion.so/Privacy-Policy-for-Qif-3041610c1fb38097b028e67344fe4e71">Privacy</a>
         <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms</a>
-        <a href="mailto:youssefjht@gmail.com">Support</a>
+        <a href="mailto:youssefjht@gmail.com" id="supportLink" aria-expanded="false" aria-controls="supportPanel">Support</a>
       </nav>
+      <div class="support-panel" id="supportPanel" hidden>
+        <p>Email us and we'll get back to you.</p>
+        <div class="support-row">
+          <code id="supportEmail">youssefjht@gmail.com</code>
+          <button type="button" id="copyEmail">Copy</button>
+        </div>
+        <a class="support-mail" href="mailto:youssefjht@gmail.com">Open in mail app &#8599;</a>
+      </div>
       <p class="copy">© Qif — all your Islamic apps in one.</p>
     </footer>
   </div>
@@ -1266,6 +1310,52 @@
             }, {passive:true});
           })(cards[c]);
         }
+      }
+
+      /* ── support: never a dead click, even with no mail handler ─────── */
+      var supLink  = document.getElementById('supportLink');
+      var supPanel = document.getElementById('supportPanel');
+      var copyBtn  = document.getElementById('copyEmail');
+      var supEmail = document.getElementById('supportEmail');
+
+      if (supLink && supPanel){
+        supLink.addEventListener('click', function(ev){
+          ev.preventDefault();
+          var open = supLink.getAttribute('aria-expanded') === 'true';
+          supLink.setAttribute('aria-expanded', open ? 'false' : 'true');
+          if (open){
+            supPanel.classList.remove('open');
+            setTimeout(function(){ if (!supPanel.classList.contains('open')) supPanel.hidden = true; }, 350);
+          } else {
+            supPanel.hidden = false;
+            requestAnimationFrame(function(){ supPanel.classList.add('open'); });
+          }
+        });
+      }
+
+      if (copyBtn && supEmail){
+        copyBtn.addEventListener('click', function(){
+          var addr = supEmail.textContent.trim();
+          function done(){
+            copyBtn.textContent = 'Copied';
+            copyBtn.classList.add('done');
+            setTimeout(function(){ copyBtn.textContent = 'Copy'; copyBtn.classList.remove('done'); }, 1900);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText){
+            navigator.clipboard.writeText(addr).then(done, select);
+          } else {
+            select();
+          }
+          function select(){
+            try {
+              var range = document.createRange();
+              range.selectNodeContents(supEmail);
+              var sel = window.getSelection();
+              sel.removeAllRanges(); sel.addRange(range);
+              if (document.execCommand && document.execCommand('copy')) done();
+            } catch (e) {}
+          }
+        });
       }
 
       /* ── pause the ticker when it is off-screen ──────────────────────── */
