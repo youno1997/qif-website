@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+
+  "slots": [
+    {
+      "id": "jumuah-banner-2026",
+      "placement": "banner",
+      "style": "gold",
+      "icon": "🕌",
+      "priority": 100,
+      "when": { "weekdays": [6] },
+      "title": {
+        "en": "Jumu'ah Mubarak",
+        "ar": "جمعة مباركة",
+        "tr": "Hayırlı Cumalar",
+        "ms": "Jumaat Mubarak",
+        "id": "Jumat Mubarak",
+        "ur": "جمعہ مبارک",
+        "bn": "জুমা মুবারক",
+        "hi": "जुमा मुबारक",
+        "fr": "Joumou'a Moubarak",
+        "fa": "جمعه مبارک",
+        "ha": "Barka da Jumu'a"
+      },
+      "body": {
+        "en": "Send abundant salawat today, and read Surah al-Kahf.",
+        "ar": "أكثِر من الصلاة على النبي ﷺ اليوم، واقرأ سورة الكهف.",
+        "tr": "Bugün Peygamber'e ﷺ çokça salavat getir ve Kehf Suresi'ni oku.",
+        "ms": "Perbanyakkan selawat hari ini dan bacalah Surah al-Kahf.",
+        "id": "Perbanyak selawat hari ini dan bacalah Surah al-Kahfi.",
+        "ur": "آج کثرت سے درود بھیجیں اور سورۃ الکہف پڑھیں۔",
+        "bn": "আজ বেশি বেশি দরুদ পড়ুন এবং সূরা আল-কাহফ তিলাওয়াত করুন।",
+        "hi": "आज ज़्यादा से ज़्यादा दुरूद पढ़ें और सूरह अल-कहफ़ पढ़ें।",
+        "fr": "Multiplie les salawat aujourd'hui et lis la sourate Al-Kahf.",
+        "fa": "امروز بسیار صلوات بفرست و سورهٔ کهف را بخوان.",
+        "ha": "Yawaita salati ga Annabi ﷺ yau, kuma karanta Suratul Kahfi."
+      }
+    },
+
+    {
+      "id": "jumuah-salawat-challenge-2026",
+      "placement": "card",
+      "style": "emerald",
+      "icon": "📿",
+      "priority": 90,
+      "dismissible": true,
+      "when": { "weekdays": [6] },
+      "action": { "type": "open", "value": "openDhikr" },
+      "title": {
+        "en": "Friday Salawat Challenge",
+        "ar": "تحدي الصلاة على النبي ﷺ",
+        "tr": "Cuma Salavat Hedefi",
+        "ms": "Cabaran Selawat Jumaat",
+        "id": "Tantangan Selawat Jumat",
+        "ur": "جمعہ درود چیلنج",
+        "bn": "জুমার দরুদ চ্যালেঞ্জ",
+        "hi": "जुमा दुरूद चैलेंज",
+        "fr": "Défi Salawat du Vendredi",
+        "fa": "چالش صلوات جمعه",
+        "ha": "Kalubalen Salati na Jumu'a"
+      },
+      "body": {
+        "en": "100 salawat before Maghrib, in shaa' Allah.",
+        "ar": "١٠٠ صلاة على النبي ﷺ قبل المغرب بإذن الله.",
+        "tr": "Akşam ezanına kadar 100 salavat, inşallah.",
+        "ms": "100 selawat sebelum Maghrib, insya-Allah.",
+        "id": "100 selawat sebelum Magrib, insya Allah.",
+        "ur": "مغرب سے پہلے ۱۰۰ درود، ان شاء اللہ۔",
+        "bn": "মাগরিবের আগে ১০০ দরুদ, ইন শা আল্লাহ।",
+        "hi": "मग़रिब से पहले 100 दुरूद, इन शा अल्लाह।",
+        "fr": "100 salawat avant le Maghrib, in shaa Allah.",
+        "fa": "۱۰۰ صلوات پیش از مغرب، ان‌شاءالله.",
+        "ha": "Salati 100 kafin Magriba, in sha Allah."
+      },
+      "cta": {
+        "en": "Start",
+        "ar": "ابدأ",
+        "tr": "Başla",
+        "ms": "Mula",
+        "id": "Mulai",
+        "ur": "شروع کریں",
+        "bn": "শুরু করুন",
+        "hi": "शुरू करें",
+        "fr": "Commencer",
+        "fa": "شروع",
+        "ha": "Fara"
+      }
+    }
+  ],
+
+  "modules": []
+}
