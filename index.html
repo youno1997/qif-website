@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Qif — All your Islamic apps in one</title>
-<meta name="description" content="Prayer times, the full Quran with word-by-word audio, dhikr, tasbih, qibla and streaks — in one app. Plus the part no other app has: when it's time to pray, your apps lock. Free to start." />
+<title>Qif — The all-in-one Muslim app</title>
+<meta name="description" content="Prayer times, the Quran word by word with audio, dhikr, Qibla and dhikr games — in one app. At every prayer time your apps pause, and you unlock them by remembering Allah. No ads. 12 languages." />
 <meta name="theme-color" content="#080E1A" />
 <link rel="canonical" href="https://qifapp.com/" />
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
@@ -13,19 +13,20 @@
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Qif" />
-<meta property="og:title" content="Qif — All your Islamic apps in one" />
-<meta property="og:description" content="Prayer times, Quran, dhikr, qibla and focus in one app — and when it's time to pray, your apps lock." />
+<meta property="og:title" content="Qif — The all-in-one Muslim app" />
+<meta property="og:description" content="Prayer times, Quran, dhikr, Qibla and games in one app — and at every prayer time your apps pause until you remember Allah." />
 <meta property="og:image" content="https://qifapp.com/assets/og-card.png" />
 <meta property="og:url" content="https://qifapp.com/" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Qif — All your Islamic apps in one" />
-<meta name="twitter:description" content="Prayer times, Quran, dhikr, qibla and focus in one app — and when it's time to pray, your apps lock." />
+<meta name="twitter:title" content="Qif — The all-in-one Muslim app" />
+<meta name="twitter:description" content="Prayer times, Quran, dhikr, Qibla and games in one app — and at every prayer time your apps pause until you remember Allah." />
 <meta name="twitter:image" content="https://qifapp.com/assets/og-card.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@500;600;700&display=swap" rel="stylesheet" />
 <link rel="preload" as="image" href="assets/hero-bg.jpg" />
+<link rel="preload" as="image" href="assets/screens/v2/home.webp" type="image/webp" />
 
 <style>
   :root{
@@ -469,6 +470,29 @@
   .way h3{font-size:clamp(18px,4.4vw,22px);font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:10px;max-width:18ch}
   .way p{font-size:14.5px;line-height:1.58;color:var(--muted);max-width:36ch}
 
+
+  /* ---------- new in 2.0 ---------- */
+  .newin{position:relative;z-index:1;text-align:center;padding:74px 0 4px}
+  .new-grid{display:grid;grid-template-columns:1fr;gap:16px;max-width:1060px;margin:30px auto 0}
+  @media(min-width:760px){ .new-grid{grid-template-columns:1fr 1fr;gap:20px} }
+  .feat{
+    background:var(--card);border:1px solid var(--hairline);border-radius:26px;
+    padding:24px 20px;display:flex;gap:20px;align-items:center;text-align:left;
+    transition:opacity .7s var(--ease), transform .5s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+  }
+  .feat:hover{border-color:rgba(255,255,255,.18);background:var(--card-hi);transform:translateY(-4px)}
+  .feat-phone{width:min(150px,38vw);flex:none}
+  .feat-phone .phone{width:100%;opacity:1;border-radius:28px;padding:6px;box-shadow:0 24px 48px -20px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.07), 0 2px 0 rgba(255,255,255,.10) inset}
+  .feat-phone .phone .screen,.feat-phone .phone .glare{border-radius:23px}
+  .feat-phone .phone .notch{height:13px;top:6px}
+  .feat-t{min-width:0}
+  .feat h3{font-size:clamp(17px,4.2vw,20px);font-weight:800;letter-spacing:-.02em;line-height:1.2;margin-bottom:8px}
+  .feat p{font-size:14px;line-height:1.55;color:var(--muted)}
+  @media(max-width:480px){
+    .feat{flex-direction:column;text-align:center;padding:26px 20px}
+    .feat-phone{width:min(170px,52vw)}
+  }
+
   /* ---------- everything inside: pillar grid ---------- */
   .inside{position:relative;z-index:1;text-align:center;padding:74px 0 6px}
   .pillars{
@@ -703,15 +727,15 @@
   .rv-in .rv{opacity:1;transform:none;filter:none}
 
   /* cursor spotlight on cards */
-  .pillar,.way,.old,.one-card{position:relative;overflow:hidden}
-  .pillar::before,.way::before,.old::before,.one-card::before{
+  .pillar,.way,.old,.one-card,.feat{position:relative;overflow:hidden}
+  .pillar::before,.way::before,.old::before,.one-card::before,.feat::before{
     content:"";position:absolute;inset:0;border-radius:inherit;
     pointer-events:none;z-index:0;opacity:0;
     background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.085), transparent 62%);
     transition:opacity .45s var(--ease);
   }
-  .pillar:hover::before,.way:hover::before,.old:hover::before,.one-card:hover::before{opacity:1}
-  .pillar>*,.way>*,.old>*,.one-card>*{position:relative;z-index:1}
+  .pillar:hover::before,.way:hover::before,.old:hover::before,.one-card:hover::before,.feat:hover::before{opacity:1}
+  .pillar>*,.way>*,.old>*,.one-card>*,.feat>*{position:relative;z-index:1}
 
   /* the app icon breathes */
   .one-card img{animation:iconBreathe 6.5s ease-in-out infinite}
@@ -775,7 +799,8 @@
         </a>
         <nav class="topnav" aria-label="Sections">
           <a href="#all-in-one">All in one</a>
-          <a href="#lock">The lock</a>
+          <a href="#lock">The pause</a>
+          <a href="#new">New in 2.0</a>
           <a href="#inside">Features</a>
           <a href="#faq">FAQ</a>
         </nav>
@@ -791,16 +816,16 @@
       <section class="hero">
         <div class="hero-bg" aria-hidden="true"></div>
         <div class="inner">
-          <span class="eyebrow"><span class="dot"></span> Prayer · Quran · Dhikr · Focus</span>
-          <h1 class="headline"><span class="l1">All your Islamic apps,</span> <span class="accent l2">in one.</span></h1>
-          <p class="subline">Prayer times, the full Quran with audio, dhikr, qibla and streaks. And the part no other app has — <b>when it's time to pray, your apps lock.</b></p>
+          <span class="eyebrow"><span class="dot"></span> New · Qif 2.0</span>
+          <h1 class="headline"><span class="l1">The all-in-one</span> <span class="accent l2">Muslim app.</span></h1>
+          <p class="subline">Prayer times, the Quran, dhikr, Qibla and games. And the part no other app has — <b>at every prayer time your apps pause, and you unlock them by remembering Allah.</b></p>
 
           <div class="hero-cta">
             <a class="appbtn appbtn--hero" href="https://apps.apple.com/us/app/qif-prayer-quran-lock/id6757913527" aria-label="Download Qif on the App Store">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.7 2.2-3.99 2.3-4.06-1.25-1.84-3.2-2.09-3.9-2.12-1.66-.17-3.24.98-4.08.98-.84 0-2.14-.96-3.52-.93-1.81.03-3.48 1.05-4.41 2.67-1.88 3.27-.48 8.11 1.35 10.76.9 1.3 1.97 2.76 3.38 2.71 1.36-.06 1.87-.88 3.51-.88 1.64 0 2.1.88 3.53.85 1.46-.02 2.38-1.32 3.27-2.63 1.03-1.51 1.46-2.97 1.48-3.05-.03-.01-2.84-1.09-2.87-4.32zM14.4 4.18c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.36.71-3.13 1.61-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.42-.6 3.16-1.48z"/></svg>
               <span class="lab"><small>Download on the</small><b>App Store</b></span>
             </a>
-            <span class="trust"><span class="star">★★★★★</span><span class="sep">·</span> Free to start <span class="sep">·</span> 3-day trial <span class="wide"><span class="sep">·</span> 11 languages</span></span>
+            <span class="trust"><span class="star">★★★★★</span><span class="sep">·</span> Free option <span class="sep">·</span> No ads <span class="wide"><span class="sep">·</span> 12 languages</span></span>
           </div>
         </div>
 
@@ -812,32 +837,36 @@
               <span class="mq"><i>🔊</i> Athan</span>
               <span class="mq"><i>📖</i> Full Quran</span>
               <span class="mq"><i>🎧</i> Word-by-word audio</span>
+              <span class="mq"><i>⚖️</i> The Scale</span>
               <span class="mq"><i>📿</i> Digital tasbih</span>
-              <span class="mq"><i>✨</i> Dhikr</span>
+              <span class="mq"><i>🎮</i> Dhikr games</span>
+              <span class="mq"><i>🏆</i> Leaderboard</span>
               <span class="mq"><i>🧭</i> Qibla compass</span>
-              <span class="mq"><i>🗓️</i> Hijri calendar</span>
-              <span class="mq"><i>⏳</i> Screen-time limits</span>
-              <span class="mq"><i>🔒</i> Prayer-time lock</span>
-              <span class="mq"><i>🔥</i> Streaks</span>
-              <span class="mq"><i>💫</i> Hasanat</span>
-              <span class="mq"><i>📺</i> Stream Quran to TV</span>
+              <span class="mq"><i>💧</i> Wudu guide</span>
+              <span class="mq"><i>🤲</i> How to pray</span>
               <span class="mq"><i>📻</i> Quran radio</span>
+              <span class="mq"><i>⬇️</i> Offline downloads</span>
+              <span class="mq"><i>⏸️</i> Prayer-time pause</span>
+              <span class="mq"><i>⏳</i> Screen-time limits</span>
+              <span class="mq"><i>🔥</i> Streaks</span>
             </div>
             <div class="marquee-set">
               <span class="mq"><i>🕌</i> Prayer times</span>
               <span class="mq"><i>🔊</i> Athan</span>
               <span class="mq"><i>📖</i> Full Quran</span>
               <span class="mq"><i>🎧</i> Word-by-word audio</span>
+              <span class="mq"><i>⚖️</i> The Scale</span>
               <span class="mq"><i>📿</i> Digital tasbih</span>
-              <span class="mq"><i>✨</i> Dhikr</span>
+              <span class="mq"><i>🎮</i> Dhikr games</span>
+              <span class="mq"><i>🏆</i> Leaderboard</span>
               <span class="mq"><i>🧭</i> Qibla compass</span>
-              <span class="mq"><i>🗓️</i> Hijri calendar</span>
-              <span class="mq"><i>⏳</i> Screen-time limits</span>
-              <span class="mq"><i>🔒</i> Prayer-time lock</span>
-              <span class="mq"><i>🔥</i> Streaks</span>
-              <span class="mq"><i>💫</i> Hasanat</span>
-              <span class="mq"><i>📺</i> Stream Quran to TV</span>
+              <span class="mq"><i>💧</i> Wudu guide</span>
+              <span class="mq"><i>🤲</i> How to pray</span>
               <span class="mq"><i>📻</i> Quran radio</span>
+              <span class="mq"><i>⬇️</i> Offline downloads</span>
+              <span class="mq"><i>⏸️</i> Prayer-time pause</span>
+              <span class="mq"><i>⏳</i> Screen-time limits</span>
+              <span class="mq"><i>🔥</i> Streaks</span>
             </div>
           </div>
         </div>
@@ -851,21 +880,15 @@
               <div class="screen">
                 <span class="notch" aria-hidden="true"></span>
                 <span class="glare" aria-hidden="true"></span>
-                <picture>
-                  <source srcset="assets/screens/prayer-lock.webp" type="image/webp" />
-                  <img src="assets/screens/prayer-lock.png" alt="Qif locking apps at Asr with a Mark as Prayed button" width="620" height="1344" loading="lazy" />
-                </picture>
+                <img src="assets/screens/v2/unlock-dhikr.webp" alt="Qif pause screen: say SubhanAllah aloud to unlock your apps" width="620" height="1344" loading="lazy" />
               </div>
-              <figcaption class="cap">Prayer lock</figcaption>
+              <figcaption class="cap">Unlock with dhikr</figcaption>
             </figure>
             <figure class="phone mid">
               <div class="screen">
                 <span class="notch" aria-hidden="true"></span>
                 <span class="glare" aria-hidden="true"></span>
-                <picture>
-                  <source srcset="assets/screens/home.webp" type="image/webp" />
-                  <img src="assets/screens/home.png" alt="Qif home screen: next prayer countdown, today's prayers, Quran and dhikr shortcuts" width="620" height="1344" fetchpriority="high" />
-                </picture>
+                <img src="assets/screens/v2/home.webp" alt="Qif home: next prayer countdown and today's five prayers" width="620" height="1344" fetchpriority="high" />
               </div>
               <figcaption class="cap">Your day</figcaption>
             </figure>
@@ -873,12 +896,9 @@
               <div class="screen">
                 <span class="notch" aria-hidden="true"></span>
                 <span class="glare" aria-hidden="true"></span>
-                <picture>
-                  <source srcset="assets/screens/follow-along.webp" type="image/webp" />
-                  <img src="assets/screens/follow-along.png" alt="Quran follow-along: Al-Fatihah highlighted word by word with translation and transliteration" width="620" height="1344" loading="lazy" />
-                </picture>
+                <img src="assets/screens/v2/follow-along.webp" alt="Al-Fatihah word by word, each word highlighted as it is recited, with its meaning" width="620" height="1344" loading="lazy" />
               </div>
-              <figcaption class="cap">Read &amp; listen</figcaption>
+              <figcaption class="cap">Word by word</figcaption>
             </figure>
           </div>
           <p class="scroll-hint">Swipe <span class="ar" aria-hidden="true">→</span></p>
@@ -890,7 +910,7 @@
         <div class="inner">
           <span class="eyebrow"><span class="dot"></span> One app. Not six.</span>
           <h2 class="sec-h">Everything you were juggling, <span class="accent-b">in one place.</span></h2>
-          <p class="sec-sub">Most people keep a separate app for every part of their deen — then a focus app to stop scrolling past it all. Qif is all of them, working together.</p>
+          <p class="sec-sub">Most people keep a separate app for every part of their deen — then a focus app to stop scrolling past it all. Qif is all of them, in one place.</p>
 
           <div class="old-grid">
             <div class="old"><span class="oi" aria-hidden="true">🕌</span><span class="ol"><s>A prayer-times app</s></span></div>
@@ -909,17 +929,17 @@
           <div class="one-card">
             <img src="assets/icon-192.png" alt="" width="60" height="60" />
             <span class="n">Qif</span>
-            <span class="d">One app. One subscription. And the only one that <b>closes the distraction for you</b> when it's time to worship.</span>
+            <span class="d">One app — and the only one that <b>pauses the distraction for you</b> when it's time to pray.</span>
           </div>
         </div>
       </section>
 
-      <!-- two ways your apps lock -->
-      <section class="ways" id="lock" aria-label="How Qif locks your apps">
+      <!-- the pause: apps pause at prayer time, unlock by remembering Allah -->
+      <section class="ways" id="lock" aria-label="How Qif pauses your apps">
         <div class="inner">
-          <span class="eyebrow"><span class="dot"></span> Two ways to pause</span>
+          <span class="eyebrow"><span class="dot"></span> Pause, then remember</span>
           <h2 class="sec-h">The part no other <span class="accent">Islamic app has.</span></h2>
-          <p class="sec-sub">Reminders are easy to swipe away. Qif actually closes the apps that pull you in — and gives you a way to earn them back.</p>
+          <p class="sec-sub">At every prayer time — and when your daily limit runs out — Qif pauses the apps you choose. To unlock them, you remember Allah.</p>
           <div class="ways-grid">
             <article class="way">
               <div class="way-phone">
@@ -927,16 +947,13 @@
                   <div class="screen">
                     <span class="notch" aria-hidden="true"></span>
                     <span class="glare" aria-hidden="true"></span>
-                    <picture>
-                      <source srcset="assets/screens/prayer-lock.webp" type="image/webp" />
-                      <img src="assets/screens/prayer-lock.png" alt="Qif prayer-time lock screen for Asr with a Mark as Prayed button" width="620" height="1344" loading="lazy" />
-                    </picture>
+                    <img src="assets/screens/v2/unlock-dhikr.webp" alt="Qif pause screen asking you to say SubhanAllah to unlock your apps" width="620" height="1344" loading="lazy" />
                   </div>
                 </div>
               </div>
-              <span class="way-tag blue">At prayer time</span>
-              <h3>When the athan comes, your apps lock.</h3>
-              <p>A gentle nudge to pause and pray. Mark your prayer to unlock — or snooze a few minutes when you truly need to.</p>
+              <span class="way-tag blue">Say it aloud</span>
+              <h3>Say a dhikr out loud.</h3>
+              <p>Qif listens as you say SubhanAllah, Alhamdulillah or another dhikr you pick. Finish the count and your apps open again.</p>
             </article>
             <article class="way">
               <div class="way-phone">
@@ -944,16 +961,108 @@
                   <div class="screen">
                     <span class="notch" aria-hidden="true"></span>
                     <span class="glare" aria-hidden="true"></span>
-                    <picture>
-                      <source srcset="assets/screens/screentime.webp" type="image/webp" />
-                      <img src="assets/screens/screentime.png" alt="Qif screen-time limit lock on Instagram, offering Read Quran or Complete dhikr to unlock" width="620" height="1344" loading="lazy" />
-                    </picture>
+                    <img src="assets/screens/v2/unlock-quran.webp" alt="Qif pause screen asking you to read three verses of the Quran to unlock" width="620" height="1344" loading="lazy" />
                   </div>
                 </div>
               </div>
-              <span class="way-tag gold">When time runs out</span>
-              <h3>Scrolled too long? Earn your time back.</h3>
-              <p>Set a daily limit for the apps that pull you in. Reach it and Qif turns idle scrolling into worship — read Quran or complete dhikr to unlock more.</p>
+              <span class="way-tag gold">Or read</span>
+              <h3>Or read a few verses.</h3>
+              <p>Open the Quran and read a few verses. When you’re done, your apps come back — and the scrolling time turned into worship.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- new in 2.0 -->
+      <section class="newin" id="new" aria-label="New in Qif 2.0">
+        <div class="inner">
+          <span class="eyebrow"><span class="dot"></span> New in 2.0</span>
+          <h2 class="sec-h">A whole new Qif, <span class="accent">made for every day.</span></h2>
+          <p class="sec-sub">A fresh home you can arrange yourself, the Quran word by word, guides you can follow step by step, and games that count your dhikr.</p>
+          <div class="new-grid">
+            <article class="feat">
+              <div class="feat-phone"><div class="phone">
+                  <div class="screen">
+                    <span class="notch" aria-hidden="true"></span>
+                    <span class="glare" aria-hidden="true"></span>
+                    <img src="assets/screens/v2/scale.webp" alt="The Scale: today’s deen time weighed against dunya screen time" width="620" height="1344" loading="lazy" />
+                  </div>
+                </div></div>
+              <div class="feat-t">
+                <span class="way-tag gold">The Scale</span>
+                <h3>Weigh your day.</h3>
+                <p>Verses read, dhikr said and prayers prayed sit on one side. Time on your phone sits on the other. See which way your day leans.</p>
+              </div>
+            </article>
+            <article class="feat">
+              <div class="feat-phone"><div class="phone">
+                  <div class="screen">
+                    <span class="notch" aria-hidden="true"></span>
+                    <span class="glare" aria-hidden="true"></span>
+                    <img src="assets/screens/v2/follow-along.webp" alt="Al-Fatihah word by word with each word highlighted as it is recited" width="620" height="1344" loading="lazy" />
+                  </div>
+                </div></div>
+              <div class="feat-t">
+                <span class="way-tag blue">Quran</span>
+                <h3>The Quran, word by word.</h3>
+                <p>Every word lights up as it’s recited, with its meaning right under it. Read along and learn what each word says.</p>
+              </div>
+            </article>
+            <article class="feat">
+              <div class="feat-phone"><div class="phone">
+                  <div class="screen">
+                    <span class="notch" aria-hidden="true"></span>
+                    <span class="glare" aria-hidden="true"></span>
+                    <img src="assets/screens/v2/wudu.webp" alt="How to Perform Wudu: an illustrated step-by-step guide" width="620" height="1344" loading="lazy" />
+                  </div>
+                </div></div>
+              <div class="feat-t">
+                <span class="way-tag blue">Learn</span>
+                <h3>Wudu and prayer, step by step.</h3>
+                <p>Illustrated guides walk you through wudu and the full prayer, one step at a time, with what to say at each step.</p>
+              </div>
+            </article>
+            <article class="feat">
+              <div class="feat-phone"><div class="phone">
+                  <div class="screen">
+                    <span class="notch" aria-hidden="true"></span>
+                    <span class="glare" aria-hidden="true"></span>
+                    <img src="assets/screens/v2/games.webp" alt="Qif games: Noor Glide, Barakah Beads, Tasbih Flow, Polish the Heart and more, with a leaderboard" width="620" height="1344" loading="lazy" />
+                  </div>
+                </div></div>
+              <div class="feat-t">
+                <span class="way-tag gold">Play</span>
+                <h3>Six dhikr games.</h3>
+                <p>Noor Glide, Barakah Beads, Tasbih Flow, Polish the Heart, Minaret Builder and Echo of Adhkar. You play by saying dhikr out loud — then climb the leaderboard.</p>
+              </div>
+            </article>
+            <article class="feat">
+              <div class="feat-phone"><div class="phone">
+                  <div class="screen">
+                    <span class="notch" aria-hidden="true"></span>
+                    <span class="glare" aria-hidden="true"></span>
+                    <img src="assets/screens/v2/tasbih.webp" alt="Digital tasbih: slide the bead down the string to count SubhanAllah" width="620" height="1344" loading="lazy" />
+                  </div>
+                </div></div>
+              <div class="feat-t">
+                <span class="way-tag blue">Tasbih</span>
+                <h3>A tasbih in your pocket.</h3>
+                <p>Tap to count, or slide the beads one by one like the real thing. Pick a dhikr and a target — 33, 99 or your own.</p>
+              </div>
+            </article>
+            <article class="feat">
+              <div class="feat-phone"><div class="phone">
+                  <div class="screen">
+                    <span class="notch" aria-hidden="true"></span>
+                    <span class="glare" aria-hidden="true"></span>
+                    <img src="assets/screens/v2/radio.webp" alt="Quran Radio with continuous listening and surahs downloaded for offline" width="620" height="1344" loading="lazy" />
+                  </div>
+                </div></div>
+              <div class="feat-t">
+                <span class="way-tag gold">Listen</span>
+                <h3>Quran Radio, even offline.</h3>
+                <p>Let the Quran play surah after surah. Download the surahs you love and listen with no signal at all.</p>
+              </div>
             </article>
           </div>
         </div>
@@ -964,13 +1073,13 @@
         <div class="inner">
           <span class="eyebrow"><span class="dot"></span> All in one</span>
           <h2 class="sec-h">Everything inside <span class="accent">Qif.</span></h2>
-          <p class="sec-sub">Six apps' worth of features, built to work as one — so your prayers, your Quran and your focus all live on the same screen.</p>
+          <p class="sec-sub">Six apps’ worth of features in one — so your prayers, your Quran and your dhikr all live in the same place.</p>
 
           <div class="pillars">
             <article class="pillar c-blue">
               <span class="pi" aria-hidden="true">🕌</span>
               <h3>Prayer times &amp; athan</h3>
-              <p class="lede">Never guess when it's time again.</p>
+              <p class="lede">Never guess when it’s time again.</p>
               <ul>
                 <li>Accurate times for your exact location</li>
                 <li>Athan with a choice of muezzins</li>
@@ -982,60 +1091,60 @@
             <article class="pillar c-teal">
               <span class="pi" aria-hidden="true">📖</span>
               <h3>The complete Quran</h3>
-              <p class="lede">All 114 surahs, beautifully set.</p>
+              <p class="lede">All 114 surahs, word by word.</p>
               <ul>
                 <li>Arabic with translation and transliteration</li>
+                <li>Each word highlighted as it’s recited</li>
+                <li>The meaning of every word</li>
                 <li>Pick up exactly where you left off</li>
-                <li>Verse-by-verse progress as you read</li>
-                <li>A daily verse to come back to</li>
               </ul>
             </article>
 
             <article class="pillar c-teal">
-              <span class="pi" aria-hidden="true">🎧</span>
-              <h3>Listen &amp; follow along</h3>
-              <p class="lede">Read while you listen, word by word.</p>
+              <span class="pi" aria-hidden="true">📻</span>
+              <h3>Quran Radio</h3>
+              <p class="lede">Keep the Quran playing.</p>
               <ul>
-                <li>Recitation highlighted word by word</li>
-                <li>Quran radio that keeps playing in the background</li>
-                <li>Adjustable pace and repeat</li>
-                <li>Stream the Quran to your TV</li>
+                <li>Surah after surah, in the background</li>
+                <li>Choose your reciter</li>
+                <li>Download surahs for offline</li>
+                <li>Read along from the player</li>
               </ul>
             </article>
 
             <article class="pillar c-violet">
               <span class="pi" aria-hidden="true">📿</span>
               <h3>Dhikr &amp; tasbih</h3>
-              <p class="lede">A tasbih that feels like beads.</p>
+              <p class="lede">Count your dhikr, your way.</p>
               <ul>
-                <li>Drag-a-bead digital tasbih with haptics</li>
-                <li>A library of dhikr to choose from</li>
-                <li>Custom counts and targets</li>
-                <li>Dhikr sessions that unlock your apps</li>
+                <li>Tap or slide the beads</li>
+                <li>A list of dhikr to choose from</li>
+                <li>Your own counts and targets</li>
+                <li>Six games played by saying dhikr aloud</li>
               </ul>
             </article>
 
             <article class="pillar c-gold">
-              <span class="pi" aria-hidden="true">🔒</span>
-              <h3>Focus &amp; screen time</h3>
-              <p class="lede">The reason people keep Qif installed.</p>
+              <span class="pi" aria-hidden="true">⏸️</span>
+              <h3>Pause at prayer time</h3>
+              <p class="lede">The reason people keep Qif.</p>
               <ul>
-                <li>Apps lock at prayer time until you pray</li>
+                <li>Apps pause at every prayer time</li>
                 <li>Daily screen-time limits, app by app</li>
-                <li>Earn time back with Quran or dhikr</li>
+                <li>Unlock by saying dhikr or reading verses</li>
                 <li>Emergency and wellness pauses, one tap</li>
               </ul>
             </article>
 
             <article class="pillar c-gold">
-              <span class="pi" aria-hidden="true">🔥</span>
-              <h3>Streaks &amp; hasanat</h3>
-              <p class="lede">See your consistency add up.</p>
+              <span class="pi" aria-hidden="true">⚖️</span>
+              <h3>The Scale &amp; streaks</h3>
+              <p class="lede">See your days add up.</p>
               <ul>
+                <li>Your deen weighed against screen time</li>
+                <li>Verses, dhikr and prayers counted for you</li>
                 <li>Daily streaks for prayer, Quran and dhikr</li>
-                <li>Verses, dhikr and salat counted for you</li>
-                <li>A running hasanat total</li>
-                <li>Your faith calendar, week by week</li>
+                <li>Wudu and prayer guides to learn from</li>
               </ul>
             </article>
           </div>
@@ -1043,14 +1152,14 @@
           <div class="chips">
             <span class="chip">🧭 Qibla compass</span>
             <span class="chip">🗓️ Hijri calendar</span>
-            <span class="chip">🌍 Community hasanat</span>
+            <span class="chip">🏠 Your own Quick access</span>
+            <span class="chip">🔄 Account that syncs</span>
+            <span class="chip">🏆 Leaderboard</span>
             <span class="chip">🌸 Wellness pause</span>
             <span class="chip">⏸️ Emergency pause</span>
-            <span class="chip">🌙 Light &amp; dark</span>
-            <span class="chip">🗣️ 11 languages</span>
-            <span class="chip gold">✨ More coming</span>
+            <span class="chip">🗣️ 12 languages</span>
+            <span class="chip gold">🚫 No ads</span>
           </div>
-          <p class="chips-note">Every one of these is included — there's no second app to buy.</p>
         </div>
       </section>
 
@@ -1059,9 +1168,10 @@
         <div class="inner">
           <span class="eyebrow"><span class="dot"></span> For the whole ummah</span>
           <h2 class="sec-h">Qif speaks <span class="accent">your language.</span></h2>
-          <p class="sec-sub">Eleven languages, with full right-to-left support for Arabic, Urdu and Farsi.</p>
+          <p class="sec-sub">Twelve languages, with full right-to-left support for Arabic, Urdu and Farsi.</p>
           <div class="lang-row">
             <span class="lang">English</span>
+            <span class="lang">Español</span>
             <span class="lang rtl">العربية</span>
             <span class="lang">Türkçe</span>
             <span class="lang">Bahasa Melayu</span>
@@ -1081,13 +1191,13 @@
         <div class="closing-bg" aria-hidden="true"></div>
         <div class="inner">
           <h2>One app for <span class="accent">your whole deen.</span></h2>
-          <p class="sec-sub">Prayer, Quran, dhikr and focus — free to start, on iPhone.</p>
+          <p class="sec-sub">Prayer, Quran, dhikr, Qibla and games — on iPhone, with a free option for anyone who needs it.</p>
           <div class="hero-cta">
             <a class="appbtn appbtn--hero" href="https://apps.apple.com/us/app/qif-prayer-quran-lock/id6757913527" aria-label="Download Qif on the App Store">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.04c-.03-2.7 2.2-3.99 2.3-4.06-1.25-1.84-3.2-2.09-3.9-2.12-1.66-.17-3.24.98-4.08.98-.84 0-2.14-.96-3.52-.93-1.81.03-3.48 1.05-4.41 2.67-1.88 3.27-.48 8.11 1.35 10.76.9 1.3 1.97 2.76 3.38 2.71 1.36-.06 1.87-.88 3.51-.88 1.64 0 2.1.88 3.53.85 1.46-.02 2.38-1.32 3.27-2.63 1.03-1.51 1.46-2.97 1.48-3.05-.03-.01-2.84-1.09-2.87-4.32zM14.4 4.18c.74-.9 1.24-2.15 1.1-3.4-1.07.04-2.36.71-3.13 1.61-.69.79-1.29 2.06-1.13 3.27 1.19.09 2.42-.6 3.16-1.48z"/></svg>
               <span class="lab"><small>Download on the</small><b>App Store</b></span>
             </a>
-            <span class="trust"><span class="star">★★★★★</span><span class="sep">·</span> Free to start <span class="sep">·</span> 3-day trial</span>
+            <span class="trust"><span class="star">★★★★★</span><span class="sep">·</span> Free option <span class="sep">·</span> No ads</span>
           </div>
         </div>
       </section>
@@ -1097,31 +1207,39 @@
         <p class="faq-h">Questions</p>
         <details class="q">
           <summary>What exactly is included? <span class="ico" aria-hidden="true">+</span></summary>
-          <div class="a">Everything: prayer times and athan, the complete Quran with translation, transliteration and word-by-word audio, a digital tasbih and dhikr library, a qibla compass, the Hijri calendar, streaks and hasanat — plus the prayer-time lock and daily screen-time limits. One app, one subscription.</div>
+          <div class="a">Everything: prayer times and athan, the complete Quran word by word with audio, Quran Radio with offline downloads, a digital tasbih, six dhikr games with a leaderboard, The Scale, illustrated wudu and prayer guides, a Qibla compass, the Hijri calendar and streaks — plus the prayer-time pause and daily screen-time limits.</div>
         </details>
         <details class="q">
           <summary>Do I still need my other Islamic apps? <span class="ico" aria-hidden="true">+</span></summary>
-          <div class="a">That's the idea — you shouldn't. Qif covers prayer times, Quran, dhikr, qibla and tracking in one place, and adds the focus side no separate app can: it actually locks the distractions when it's time to worship.</div>
+          <div class="a">That’s the idea — you shouldn’t. Qif covers prayer times, Quran, dhikr, Qibla and tracking in one place, and adds what no separate app can: it pauses the distractions when it’s time to pray.</div>
         </details>
         <details class="q">
           <summary>Is Qif free? <span class="ico" aria-hidden="true">+</span></summary>
-          <div class="a">Yes — free to start with a 3-day trial. No card needed to begin.</div>
+          <div class="a">Qif has a Supporter plan. If you can’t afford it right now, choose “I can’t afford it right now” and you get full access for free.</div>
         </details>
         <details class="q">
           <summary>How do I unlock my apps? <span class="ico" aria-hidden="true">+</span></summary>
-          <div class="a">Whenever your apps lock — for prayer, or when your screen-time limit's up — you unlock by marking your prayer, completing a short dhikr, or reading Quran. You choose.</div>
+          <div class="a">Remember Allah. Say a dhikr out loud — Qif listens and counts — or read a few verses of the Quran. Then your apps open again.</div>
         </details>
         <details class="q">
           <summary>Can Qif limit my screen time too? <span class="ico" aria-hidden="true">+</span></summary>
-          <div class="a">Yes. Set a daily limit for any app. When you hit it, Qif locks it until you read Quran or complete dhikr — so idle scrolling turns into worship. Change your limits anytime, and wellness and one-tap emergency pauses are built in.</div>
+          <div class="a">Yes. Set a daily limit for any app. When you reach it, Qif pauses it until you say dhikr or read Quran — so scrolling time turns into worship. Wellness and one-tap emergency pauses are built in.</div>
         </details>
         <details class="q">
-          <summary>Does it know my prayer times? <span class="ico" aria-hidden="true">+</span></summary>
-          <div class="a">Yes. Qif uses your location to calculate accurate prayer times automatically, and plays the athan with the muezzin you choose.</div>
+          <summary>What is The Scale? <span class="ico" aria-hidden="true">+</span></summary>
+          <div class="a">A simple picture of your day. The verses you read, the dhikr you say and the prayers you pray go on one side; time on your phone goes on the other.</div>
+        </details>
+        <details class="q">
+          <summary>Does Qif show ads or sell my data? <span class="ico" aria-hidden="true">+</span></summary>
+          <div class="a">No. There are no ads in Qif, and your data is never sold.</div>
+        </details>
+        <details class="q">
+          <summary>Can I keep my progress on a new phone? <span class="ico" aria-hidden="true">+</span></summary>
+          <div class="a">Yes. Make an account and your progress syncs, so it follows you to a new iPhone.</div>
         </details>
         <details class="q">
           <summary>What languages does Qif support? <span class="ico" aria-hidden="true">+</span></summary>
-          <div class="a">Eleven: English, Arabic, Turkish, Malay, Indonesian, Urdu, Bengali, Hindi, French, Farsi and Hausa — with full right-to-left layout for Arabic, Urdu and Farsi.</div>
+          <div class="a">Twelve: English, Spanish, Arabic, Turkish, Malay, Indonesian, Urdu, Bengali, Hindi, French, Farsi and Hausa — with full right-to-left layout for Arabic, Urdu and Farsi.</div>
         </details>
       </section>
     </main>
@@ -1143,7 +1261,7 @@
         </div>
         <a class="support-mail" href="mailto:youssefjht@gmail.com">Open in mail app &#8599;</a>
       </div>
-      <p class="copy">© Qif — all your Islamic apps in one.</p>
+      <p class="copy">© Qif — the all-in-one Muslim app.</p>
     </footer>
   </div>
 
@@ -1156,45 +1274,122 @@
   </div>
 
   <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
   {
-    "@context":"https://schema.org",
-    "@graph":[
-      {
-        "@type":"SoftwareApplication",
-        "name":"Qif",
-        "applicationCategory":"LifestyleApplication",
-        "operatingSystem":"iOS",
-        "url":"https://qifapp.com/",
-        "installUrl":"https://apps.apple.com/us/app/qif-prayer-quran-lock/id6757913527",
-        "description":"An all-in-one Islamic app: prayer times and athan, the complete Quran with word-by-word audio, dhikr and tasbih, qibla, streaks and hasanat — plus app locking at prayer time and daily screen-time limits.",
-        "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
-        "featureList":[
-          "Prayer times and athan",
-          "Complete Quran with translation and transliteration",
-          "Word-by-word follow-along recitation",
-          "Quran radio and streaming to TV",
-          "Digital tasbih and dhikr library",
-          "Qibla compass",
-          "Hijri calendar",
-          "App locking at prayer time",
-          "Daily screen-time limits per app",
-          "Streaks, hasanat and faith calendar",
-          "11 languages with RTL support"
-        ]
-      },
-      {
-        "@type":"FAQPage",
-        "mainEntity":[
-          {"@type":"Question","name":"What exactly is included?","acceptedAnswer":{"@type":"Answer","text":"Prayer times and athan, the complete Quran with translation, transliteration and word-by-word audio, a digital tasbih and dhikr library, a qibla compass, the Hijri calendar, streaks and hasanat, plus the prayer-time lock and daily screen-time limits."}},
-          {"@type":"Question","name":"Do I still need my other Islamic apps?","acceptedAnswer":{"@type":"Answer","text":"Qif covers prayer times, Quran, dhikr, qibla and tracking in one place, and adds app locking at prayer time and screen-time limits that no separate app provides."}},
-          {"@type":"Question","name":"Is Qif free?","acceptedAnswer":{"@type":"Answer","text":"Qif is free to start with a 3-day trial. No card is needed to begin."}},
-          {"@type":"Question","name":"How do I unlock my apps?","acceptedAnswer":{"@type":"Answer","text":"Unlock by marking your prayer, completing a short dhikr, or reading Quran."}},
-          {"@type":"Question","name":"Can Qif limit my screen time too?","acceptedAnswer":{"@type":"Answer","text":"Yes. Set a daily limit for any app. When you hit it, Qif locks it until you read Quran or complete dhikr. Wellness and emergency pauses are built in."}},
-          {"@type":"Question","name":"What languages does Qif support?","acceptedAnswer":{"@type":"Answer","text":"Eleven: English, Arabic, Turkish, Malay, Indonesian, Urdu, Bengali, Hindi, French, Farsi and Hausa, with full right-to-left layout for Arabic, Urdu and Farsi."}}
-        ]
-      }
-    ]
+   "@type": "SoftwareApplication",
+   "name": "Qif",
+   "applicationCategory": "LifestyleApplication",
+   "operatingSystem": "iOS",
+   "softwareVersion": "2.0",
+   "url": "https://qifapp.com/",
+   "installUrl": "https://apps.apple.com/us/app/qif-prayer-quran-lock/id6757913527",
+   "description": "The all-in-one Muslim app: prayer times and athan, the Quran word by word with live audio, dhikr and a digital tasbih, Qibla, six dhikr games and illustrated wudu and prayer guides. At every prayer time your apps pause, and you unlock them by saying a dhikr aloud or reading a few verses. No ads.",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   },
+   "featureList": [
+    "Prayer times and athan",
+    "Apps pause at every prayer time (Screen Time)",
+    "Unlock by saying dhikr aloud or reading Quran verses",
+    "Daily screen-time limits per app",
+    "The Scale: today's deen weighed against screen time",
+    "Complete Quran word by word with live audio follow-along",
+    "Quran Radio with offline downloads",
+    "Digital tasbih: tap or slide the beads",
+    "Six voice-verified dhikr games with a leaderboard",
+    "Illustrated step-by-step wudu and prayer guides",
+    "Qibla compass",
+    "Hijri calendar",
+    "Customizable home with Quick access",
+    "Accounts that sync your progress",
+    "Streaks for prayer, Quran and dhikr",
+    "12 languages with right-to-left support",
+    "No ads"
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What exactly is included?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Everything: prayer times and athan, the complete Quran word by word with audio, Quran Radio with offline downloads, a digital tasbih, six dhikr games with a leaderboard, The Scale, illustrated wudu and prayer guides, a Qibla compass, the Hijri calendar and streaks — plus the prayer-time pause and daily screen-time limits."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do I still need my other Islamic apps?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "That’s the idea — you shouldn’t. Qif covers prayer times, Quran, dhikr, Qibla and tracking in one place, and adds what no separate app can: it pauses the distractions when it’s time to pray."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is Qif free?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Qif has a Supporter plan. If you can’t afford it right now, choose “I can’t afford it right now” and you get full access for free."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How do I unlock my apps?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Remember Allah. Say a dhikr out loud — Qif listens and counts — or read a few verses of the Quran. Then your apps open again."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can Qif limit my screen time too?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Set a daily limit for any app. When you reach it, Qif pauses it until you say dhikr or read Quran — so scrolling time turns into worship. Wellness and one-tap emergency pauses are built in."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is The Scale?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A simple picture of your day. The verses you read, the dhikr you say and the prayers you pray go on one side; time on your phone goes on the other."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does Qif show ads or sell my data?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. There are no ads in Qif, and your data is never sold."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I keep my progress on a new phone?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Make an account and your progress syncs, so it follows you to a new iPhone."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What languages does Qif support?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Twelve: English, Spanish, Arabic, Turkish, Malay, Indonesian, Urdu, Bengali, Hindi, French, Farsi and Hausa — with full right-to-left layout for Arabic, Urdu and Farsi."
+     }
+    }
+   ]
   }
+ ]
+}
   </script>
 
   <script>
@@ -1256,7 +1451,8 @@
       var PLAN = [
         ['.swap',    ['.eyebrow','.sec-h','.sec-sub','.old','.funnel','.one-card'],    70],
         ['.ways',    ['.eyebrow','.sec-h','.sec-sub','.way'],                          80],
-        ['.inside',  ['.eyebrow','.sec-h','.sec-sub','.pillar','.chip','.chips-note'], 55],
+        ['.newin',   ['.eyebrow','.sec-h','.sec-sub','.feat'],                         70],
+        ['.inside',  ['.eyebrow','.sec-h','.sec-sub','.pillar','.chip'],              55],
         ['.langs',   ['.eyebrow','.sec-h','.sec-sub','.lang'],                         45],
         ['.closing', ['h2','.sec-sub','.hero-cta'],                                    90],
         ['.faq',     ['.faq-h','details.q'],                                           55]
@@ -1300,7 +1496,7 @@
 
       /* ── cursor spotlight on cards ───────────────────────────────────── */
       if (hoverOK && motionOK){
-        var cards = document.querySelectorAll('.pillar,.way,.old,.one-card');
+        var cards = document.querySelectorAll('.pillar,.way,.old,.one-card,.feat');
         for (var c = 0; c < cards.length; c++){
           (function(card){
             card.addEventListener('pointermove', function(ev){
